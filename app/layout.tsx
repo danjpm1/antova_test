@@ -2,10 +2,11 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter, Bebas_Neue } from "next/font/google"
 import "./globals.css"
+import { MobileMenuProvider } from "@/components/mobile-menu-context"
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-inter"
+  variable: "--font-inter",
 })
 
 const bebas = Bebas_Neue({
@@ -16,10 +17,26 @@ const bebas = Bebas_Neue({
 
 export const metadata: Metadata = {
   title: "Antova Builders - Modern Precision Construction",
-  description: "All Out Modern. All Out Precision. Built with Intelligence. Powered by AI-driven estimation and real-time material insights.",
+  description:
+    "All Out Modern. All Out Precision. Built with Intelligence. Powered by AI-driven estimation and real-time material insights.",
   icons: {
-    icon: "/icon.svg",
+    icon: [
+      {
+        url: "/icon-light-32x32.png",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/icon-dark-32x32.png",
+        media: "(prefers-color-scheme: dark)",
+      },
+      {
+        url: "/icon.svg",
+        type: "image/svg+xml",
+      },
+    ],
+    apple: "/apple-icon.png",
   },
+    generator: 'v0.app'
 }
 
 export default function RootLayout({
@@ -30,7 +47,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${bebas.variable} font-sans antialiased`}>
-        {children}
+        <MobileMenuProvider>{children}</MobileMenuProvider>
       </body>
     </html>
   )
