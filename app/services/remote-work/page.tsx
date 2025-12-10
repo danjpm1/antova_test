@@ -67,7 +67,7 @@ export default function RemoteWorkPage() {
       <Navbar />
 
       <section className="relative w-full">
-        <div className="flex items-center justify-end px-4 sm:px-8 md:pr-24 lg:pr-32 py-8 md:py-16 lg:py-20 bg-black">
+        <div className="flex items-center justify-end px-4 sm:px-8 md:pr-24 lg:pr-32 pt-24 sm:pt-28 md:pt-20 lg:pt-24 pb-8 md:pb-16 lg:pb-20 bg-black">
           <h1 className="text-[2.5rem] sm:text-[3.5rem] md:text-[5rem] lg:text-[6.5rem] font-bold text-white tracking-tight">
             REMOTE WORK
           </h1>
