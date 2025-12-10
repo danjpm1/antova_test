@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import Image from "next/image"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 
@@ -73,13 +72,11 @@ export default function RenovationPage() {
           </h1>
         </div>
 
-        <div className="relative w-full h-[70vh]">
-          <Image
+        <div className="relative w-full h-[70vh] overflow-hidden">
+          <img
             src="/luxury-modern-cabin-interior-with-large-windows-wo.jpg"
             alt="Modern mountain home"
-            fill
-            className="object-cover object-center"
-            priority
+            className="w-full h-full object-cover"
           />
         </div>
       </section>
@@ -127,8 +124,8 @@ export default function RenovationPage() {
             >
               {STEPS.map((step, i) => (
                 <div key={i} className="w-full flex-shrink-0">
-                  <div className="relative w-full h-[300px] mb-6">
-                    <Image src={step.image} alt={step.alt} fill className="object-cover object-center" />
+                  <div className="relative w-full h-[300px] mb-6 overflow-hidden">
+                    <img src={step.image} alt={step.alt} className="w-full h-full object-cover" />
                   </div>
                 </div>
               ))}
@@ -166,12 +163,11 @@ export default function RenovationPage() {
         {/* Desktop carousel */}
         <div className="hidden md:flex w-full justify-center px-6">
           <div className="w-full max-w-[1400px]">
-            <div className="relative w-full h-[350px] md:h-[450px] lg:h-[500px]">
-              <Image
+            <div className="relative w-full h-[350px] md:h-[450px] lg:h-[500px] overflow-hidden">
+              <img
                 src={currentStep.image}
                 alt={currentStep.alt}
-                fill
-                className="object-cover object-center transition-opacity duration-300"
+                className="w-full h-full object-cover transition-opacity duration-300"
                 key={activeStep}
               />
             </div>
