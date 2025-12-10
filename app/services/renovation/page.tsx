@@ -78,7 +78,7 @@ export default function RenovationPage() {
             src="/luxury-modern-cabin-interior-with-large-windows-wo.jpg"
             alt="Modern mountain home"
             fill
-            className="object-cover"
+            className="object-cover object-center"
             priority
           />
         </div>
@@ -128,7 +128,7 @@ export default function RenovationPage() {
               {STEPS.map((step, i) => (
                 <div key={i} className="w-full flex-shrink-0">
                   <div className="relative w-full h-[300px] mb-6">
-                    <Image src={step.image} alt={step.alt} fill className="object-cover" />
+                    <Image src={step.image} alt={step.alt} fill className="object-cover object-center" />
                   </div>
                 </div>
               ))}
@@ -171,7 +171,7 @@ export default function RenovationPage() {
                 src={currentStep.image}
                 alt={currentStep.alt}
                 fill
-                className="object-cover transition-opacity duration-300"
+                className="object-cover object-center transition-opacity duration-300"
                 key={activeStep}
               />
             </div>
