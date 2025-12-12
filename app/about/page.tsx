@@ -202,7 +202,7 @@ const TeamMemberCard = ({ name, title }: { name: string; title: string }) => {
   return (
     <div className="flex flex-col items-center">
       <div 
-        className="w-full aspect-[4/5] overflow-hidden mb-4 flex items-center justify-center"
+        className="w-full aspect-[5/4] overflow-hidden mb-4 flex items-center justify-center"
         style={{ backgroundColor: "#e5e5e5" }}
       >
         <User size={80} color="#9ca3af" />
@@ -330,7 +330,7 @@ export default function AboutPage() {
       </section>
 
       <section className="relative w-full bg-white py-16 md:py-24">
-        <div className="max-w-[1200px] mx-auto px-6 md:px-12">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
           <div className="text-center mb-12 md:mb-16">
             <h2 
               className="text-3xl md:text-4xl tracking-[0.3em] uppercase mb-4"
@@ -345,7 +345,7 @@ export default function AboutPage() {
             <div className="w-12 h-0.5 mx-auto" style={{ backgroundColor: "#c6912c" }} />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-10 md:gap-y-14 lg:gap-x-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12 md:gap-y-16 lg:gap-x-12">
             {teamMembers.map((member, index) => (
               <TeamMemberCard 
                 key={`${member.name}-${index}`}
