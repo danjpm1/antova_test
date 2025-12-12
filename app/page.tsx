@@ -11,6 +11,7 @@ import Link from "next/link"
 const SCROLL_THRESHOLD = 50
 const SERVICE_CARDS_THRESHOLD = 0.5
 const TESTIMONIALS_THRESHOLD = 0.5
+const NAVBAR_REVEAL_THRESHOLD = 0.8
 
 const SERVICE_CARDS = [
   {
@@ -120,6 +121,16 @@ function QuoteIcon() {
     <svg className="w-8 h-8 text-[#c6912c]/30" fill="currentColor" viewBox="0 0 24 24">
       <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
     </svg>
+  )
+}
+
+function ScrollIndicator() {
+  return (
+    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
+      <svg className="w-6 h-6 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg>
+    </div>
   )
 }
 
@@ -276,6 +287,7 @@ function useScrollThreshold(ref: React.RefObject<HTMLElement | null>, threshold:
 
 export default function AntovaBuilders() {
   const [isScrolled, setIsScrolled] = useState(false)
+  const [showNavbar, setShowNavbar] = useState(false)
   const serviceCardsRef = useRef<HTMLElement>(null)
   const testimonialsRef = useRef<HTMLElement>(null)
 
@@ -285,6 +297,7 @@ export default function AntovaBuilders() {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > SCROLL_THRESHOLD)
+      setShowNavbar(window.scrollY > window.innerHeight * NAVBAR_REVEAL_THRESHOLD)
     }
     handleScroll()
     window.addEventListener("scroll", handleScroll)
@@ -297,7 +310,14 @@ export default function AntovaBuilders() {
 
   return (
     <div className={`min-h-screen ${topBgColor} transition-colors duration-300 ease-in-out`}>
-      <Navbar />
+      <div
+        className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-500 ease-in-out ${
+          showNavbar ? "translate-y-0" : "-translate-y-full"
+        }`}
+      >
+        <Navbar />
+      </div>
+
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
@@ -333,6 +353,8 @@ export default function AntovaBuilders() {
             </Link>
           </div>
         </div>
+
+        <ScrollIndicator />
       </section>
 
       <section className="py-20 lg:py-28 bg-black">
