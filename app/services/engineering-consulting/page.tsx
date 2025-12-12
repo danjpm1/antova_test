@@ -138,7 +138,7 @@ export default function EngineeringConsultingPage() {
             {STEPS.map((step, i) => {
               const isActive = activeStep === i
               return (
-                <div key={i} className="flex flex-col">
+                <button key={i} onClick={() => setActiveStep(i)} className="flex flex-col cursor-pointer">
                   <div className={`h-[2px] w-full transition-colors duration-300 ${isActive ? "bg-white" : "bg-gray-600"}`} />
                   <div className="flex items-center gap-2 mt-4">
                     <span
@@ -152,7 +152,7 @@ export default function EngineeringConsultingPage() {
                       {step.title}
                     </h3>
                   </div>
-                </div>
+                </button>
               )
             })}
           </div>
