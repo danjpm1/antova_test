@@ -10,6 +10,7 @@ import Link from "next/link"
 
 const SCROLL_THRESHOLD = 50
 const SERVICE_CARDS_THRESHOLD = 0.5
+const TESTIMONIALS_THRESHOLD = 0.5
 
 const SERVICE_CARDS = [
   {
@@ -276,8 +277,10 @@ function useScrollThreshold(ref: React.RefObject<HTMLElement | null>, threshold:
 export default function AntovaBuilders() {
   const [isScrolled, setIsScrolled] = useState(false)
   const serviceCardsRef = useRef<HTMLElement>(null)
+  const testimonialsRef = useRef<HTMLElement>(null)
 
   const isServiceCardsVisible = useScrollThreshold(serviceCardsRef, SERVICE_CARDS_THRESHOLD)
+  const isTestimonialsVisible = useScrollThreshold(testimonialsRef, TESTIMONIALS_THRESHOLD)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -288,11 +291,12 @@ export default function AntovaBuilders() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const bgColor = isServiceCardsVisible ? "bg-white" : "bg-black"
-  const textColor = isServiceCardsVisible ? "text-black" : "text-white"
+  const topBgColor = isServiceCardsVisible ? "bg-white" : "bg-black"
+  const smartSectionBgColor = isTestimonialsVisible ? "bg-black" : "bg-white"
+  const smartSectionTextColor = isTestimonialsVisible ? "text-white" : "text-black"
 
   return (
-    <div className={`min-h-screen ${bgColor} transition-colors duration-300 ease-in-out`}>
+    <div className={`min-h-screen ${topBgColor} transition-colors duration-300 ease-in-out`}>
       <Navbar />
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -360,7 +364,7 @@ export default function AntovaBuilders() {
       <section
         id="services"
         ref={serviceCardsRef}
-        className={`py-24 lg:py-32 ${bgColor} transition-colors duration-300 ease-in-out`}
+        className={`py-24 lg:py-32 ${topBgColor} transition-colors duration-300 ease-in-out`}
       >
         <div className="px-4 lg:px-8 xl:px-12 w-full max-w-[1800px] mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
@@ -373,7 +377,8 @@ export default function AntovaBuilders() {
 
       <section
         id="about"
-        className="py-24 lg:py-32 bg-white text-black"
+        ref={testimonialsRef}
+        className={`py-24 lg:py-32 ${smartSectionBgColor} ${smartSectionTextColor} transition-colors duration-300 ease-in-out`}
       >
         <div className="px-4 lg:px-8 xl:px-12 w-full max-w-[1800px] mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
@@ -381,7 +386,11 @@ export default function AntovaBuilders() {
               <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight">
                 Smart. Thin. Strong.
               </h2>
-              <p className="text-lg md:text-xl leading-relaxed text-gray-700">
+              <p
+                className={`text-lg md:text-xl leading-relaxed transition-colors duration-300 ${
+                  isTestimonialsVisible ? "text-white/80" : "text-gray-700"
+                }`}
+              >
                 Our builds redefine precision and performance — crafted with purpose.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
