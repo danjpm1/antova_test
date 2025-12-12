@@ -80,7 +80,7 @@ const IntroAnimation = ({ onComplete }: { onComplete: () => void }) => {
         }`}
       >
         <h1
-          className="text-5xl md:text-6xl lg:text-7xl font-normal tracking-wide"
+          className="text-[55px] md:text-[66px] lg:text-[77px] font-normal tracking-wide"
           style={{ 
             background: "linear-gradient(90deg, white 0%, white 50%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.2) 100%)",
             backgroundSize: "200% 100%",
@@ -91,7 +91,7 @@ const IntroAnimation = ({ onComplete }: { onComplete: () => void }) => {
             animation: "textReveal 1.2s ease-out forwards",
           }}
         >
-          About
+          About Us
         </h1>
       </div>
 
@@ -103,7 +103,7 @@ const IntroAnimation = ({ onComplete }: { onComplete: () => void }) => {
         <img
           src="/antova-logo-gold.svg"
           alt="Antova Logo"
-          className="h-[77px] md:h-[102px] lg:h-[128px] w-auto"
+          className="h-[100px] md:h-[133px] lg:h-[166px] w-auto"
         />
       </div>
 
@@ -202,10 +202,10 @@ const TeamMemberCard = ({ name, title }: { name: string; title: string }) => {
   return (
     <div className="flex flex-col items-center">
       <div 
-        className="w-full aspect-[16/10] overflow-hidden mb-4 flex items-center justify-center"
+        className="w-full aspect-[4/5] overflow-hidden mb-4 flex items-center justify-center"
         style={{ backgroundColor: "#e5e5e5" }}
       >
-        <User size={64} color="#9ca3af" />
+        <User size={80} color="#9ca3af" />
       </div>
       <h3 
         className="text-xl md:text-2xl tracking-[0.2em] text-center mb-1"
