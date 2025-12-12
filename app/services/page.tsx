@@ -1,205 +1,217 @@
 "use client"
 
+import { useState, useEffect, useRef } from "react"
+import Image from "next/image"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import ArrowRight from "@/components/icons/arrow-right"
 
-export default function ServicesPage() {
-  const services = [
-    {
-      title: "Renovations",
-      description: "Transform your space with expert craftsmanship. Modern updates to complete makeovers.",
-      price: "$2k-5k credits",
-      exploreText: "Learn More",
-      exploreLink: "/services/renovation",
-      quoteLink: "/contact",
-      image: "/modern-luxury-home-at-night-with-warm-interior-lig.jpg",
-    },
-    {
-      title: "New Builds",
-      description: "Built to last. From concept to completion, we handle every detail.",
-      price: "New home from $250k",
-      exploreText: "Learn More",
-      exploreLink: "/services/new-builds",
-      quoteLink: "/contact",
-      image: "/luxury-modern-cabin-interior-with-large-windows-wo1.jpg",
-    },
-    {
-      title: "Engineering & Consulting",
-      description: "Solving structural challenges with our team. Fast, reliable, quality-driven.",
-      price: "Custom pricing available",
-      exploreText: "Learn More",
-      exploreLink: "/services/engineering-consulting",
-      quoteLink: "/contact",
-      image: "/modern-minimalist-architecture-exterior-detail-bla.jpg",
-    },
-    {
-      title: "Remote Work",
-      description:
-        "Flexible to relocate to your dream location. Wherever your vision takes you, we'll bring it to life.",
-      price: "Nationwide service",
-      exploreText: "Learn More",
-      exploreLink: "/services/remote-work",
-      quoteLink: "/contact",
-      image: "/modern-glass-house-reflecting-in-lake-at-sunset-wi.jpg",
-    },
-    {
-      title: "Commercial Projects",
-      description: "Large-scale commercial construction. From retail to office buildings, we deliver excellence.",
-      price: "Project-based pricing",
-      exploreText: "Learn More",
-      exploreLink: "/services/commercial-projects",
-      quoteLink: "/contact",
-      image: "/modern-commercial-building-exterior-glass-facade.jpg",
-    },
-    {
-      title: "Signature Custom Design",
-      description: "Bespoke designs tailored to your vision. One-of-a-kind architectural masterpieces.",
-      price: "Premium custom pricing",
-      exploreText: "Learn More",
-      exploreLink: "/services/signature-custom-design",
-      quoteLink: "/contact",
-      image: "/luxury-custom-home-interior-design-modern-architec.jpg",
-    },
-  ]
+const STEPS = [
+  {
+    number: "1",
+    title: "Envision",
+    description: "We listen to your dreams and translate them into architectural concepts that are uniquely yours.",
+    image: "/aerial.jpg",
+    alt: "Custom design consultation",
+  },
+  {
+    number: "2",
+    title: "Design",
+    description: "Every detail is intentional — from floor plans to finishes, crafted around how you live.",
+    image: "/luxury-modern-cabin-interior-with-large-windows-wo1.jpg",
+    alt: "Custom architectural design",
+  },
+  {
+    number: "3",
+    title: "Realize",
+    description: "Your one-of-a-kind home comes to life — a signature space that exists nowhere else.",
+    image: "/modern-luxury-home-at-night-with-warm-interior-lig.jpg",
+    alt: "Completed custom luxury home",
+  },
+]
 
-  const phases = [
-    { step: "01", title: "Consultation", desc: "Discuss your vision and requirements" },
-    { step: "02", title: "Design & Planning", desc: "Create detailed plans and estimates" },
-    { step: "03", title: "Build & Deliver", desc: "Execute with precision and care" },
-  ]
+const ROTATION_INTERVAL = 4000
+const SWIPE_THRESHOLD = 50
+
+export default function CustomDesignPage() {
+  const [activeStep, setActiveStep] = useState(0)
+  const touchStartX = useRef(0)
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % STEPS.length)
+    }, ROTATION_INTERVAL)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+  }
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const deltaX = touchStartX.current - e.changedTouches[0].clientX
+    if (Math.abs(deltaX) < SWIPE_THRESHOLD) return
+
+    const direction = deltaX > 0 ? 1 : -1
+    setActiveStep((prev) => (prev + direction + STEPS.length) % STEPS.length)
+  }
+
+  const currentStep = STEPS[activeStep]
 
   return (
     <div className="w-full overflow-x-hidden bg-black">
       <Navbar />
 
-      <main className="pt-20 bg-black min-h-screen">
-        {/* Hero Section */}
-        <section className="py-20">
-          <div className="px-8 lg:px-12 xl:px-20">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">Our Services</h1>
-            <p className="text-lg md:text-xl text-white/70">
-              Comprehensive solutions for modern living, powered by precision and innovation.
-            </p>
+      <section className="relative w-full">
+        <div className="flex items-center justify-end px-4 sm:px-8 md:pr-24 lg:pr-32 pt-24 sm:pt-28 md:pt-20 lg:pt-24 pb-8 md:pb-16 lg:pb-20 bg-black">
+          <h1 className="text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[5.5rem] font-bold text-white tracking-tight text-right leading-tight">
+            SIGNATURE<br />CUSTOM DESIGN
+          </h1>
+        </div>
+
+        <div className="relative w-full aspect-[16/9] md:aspect-[21/9] lg:aspect-[3/1]">
+          <Image
+            src="/luxury-modern-cabin-interior-with-large-windows-wo.jpg"
+            alt="Signature custom designed home"
+            fill
+            className="object-cover object-center"
+            priority
+          />
+        </div>
+      </section>
+
+      <div className="bg-black h-16 md:h-32" />
+      <div className="w-full h-[2px] bg-[#D4A574]" />
+
+      <section className="bg-black text-white py-12 md:py-32">
+        <div className="container mx-auto px-5 md:px-6 max-w-7xl">
+          <div className="grid lg:grid-cols-2 gap-6 md:gap-16 mb-10 md:mb-20">
+            <div>
+              <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-1 md:mb-4">
+                Your Story.
+              </h2>
+              <p className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-light italic text-gray-400">
+                Our Craft.
+              </p>
+            </div>
+
+            <div className="space-y-4 md:space-y-6 text-[15px] md:text-lg text-gray-300 mt-4 lg:mt-0">
+              <p className="leading-[1.7] md:leading-8">
+                Antova Builder creates bespoke homes designed entirely around you — your lifestyle, your taste, your
+                vision. No templates, no compromises, just pure custom architecture.
+              </p>
+              <p className="leading-[1.7] md:leading-8">
+                From the initial sketch to the final walkthrough, every decision reflects your personality. We
+                collaborate closely with you to design spaces that feel like they could only belong to you — because
+                they do.
+              </p>
+              <p className="font-semibold text-white pt-1 md:pt-2">One client. One design. One masterpiece.</p>
+            </div>
           </div>
-        </section>
+        </div>
 
-        {/* Services Cards - Updated to Porsche-style immersive cards */}
-        <section className="pb-24">
-          <div className="px-4 md:px-6 lg:px-8">
-            <div className="grid md:grid-cols-2 gap-4 md:gap-6">
-              {services.map((service, index) => (
-                <div key={index} className="group relative overflow-hidden rounded-lg cursor-pointer">
-                  <div className="relative h-[60vh] md:h-[70vh] overflow-hidden">
-                    <img
-                      src={service.image || "/placeholder.svg"}
-                      alt={service.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    {/* Subtle gradient only at bottom */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-
-                    {/* Title centered at top like Porsche */}
-                    <div className="absolute top-8 md:top-12 left-0 right-0 text-center">
-                      <Link href={service.exploreLink}>
-                        <h3 className="text-xl md:text-2xl lg:text-3xl font-extrabold text-white tracking-[0.15em] uppercase hover:text-[#c6912c] transition-colors cursor-pointer">
-                          {service.title}
-                        </h3>
-                      </Link>
-                    </div>
-
-                    {/* Bottom bar with horizontal layout like Porsche */}
-                    <div className="absolute bottom-0 left-0 right-0 px-5 py-5 md:px-8 md:py-6">
-                      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4">
-                        {/* Left side: Badge only */}
-                        <div className="flex items-center gap-4">
-                          <span className="inline-block w-fit px-3 py-1 text-xs md:text-sm font-medium text-white border border-white/40 rounded">
-                            {service.price}
-                          </span>
-                        </div>
-
-                        {/* Right side: CTAs with arrow icon like Porsche */}
-                        <div className="flex items-center gap-4">
-                          <Link href={service.exploreLink} scroll={true}>
-                            <Button
-                              size="sm"
-                              className="bg-white text-black hover:bg-white/90 font-medium text-sm px-5 py-2.5 rounded-sm transition-all"
-                            >
-                              {service.exploreText}
-                            </Button>
-                          </Link>
-                          <Link
-                            href={service.quoteLink}
-                            className="flex items-center gap-2 text-white text-sm font-light hover:text-primary transition-colors"
-                          >
-                            Get Quote
-                            <ArrowRight className="w-5 h-5" />
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
+        {/* Mobile carousel */}
+        <div className="md:hidden w-full px-5">
+          <div
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            className="relative overflow-hidden"
+          >
+            <div
+              className="flex transition-transform duration-500 ease-out"
+              style={{ transform: `translateX(-${activeStep * 100}%)` }}
+            >
+              {STEPS.map((step, i) => (
+                <div key={i} className="w-full flex-shrink-0">
+                  <div className="relative w-full aspect-[4/3] mb-6">
+                    <Image src={step.image} alt={step.alt} fill className="object-cover object-center" />
                   </div>
                 </div>
               ))}
             </div>
           </div>
-        </section>
 
-        {/* Process Section - Updated colors for dark theme */}
-        <section className="py-10 md:py-20 bg-zinc-900">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="max-w-4xl mx-auto text-center mb-8 md:mb-16">
-              <h2 className="text-2xl md:text-5xl font-bold text-white mb-3 md:mb-6">Our Process</h2>
-              <p className="text-sm md:text-xl text-white/70">
-                From concept to completion, we ensure every step is executed with precision.
-              </p>
+          <div className="grid grid-cols-3 gap-3 mb-4 w-full">
+            {STEPS.map((step, i) => {
+              const isActive = activeStep === i
+              return (
+                <button key={i} onClick={() => setActiveStep(i)} className="flex flex-col cursor-pointer">
+                  <div className={`h-[2px] w-full transition-colors duration-300 ${isActive ? "bg-white" : "bg-gray-600"}`} />
+                  <div className="flex items-center gap-2 mt-4">
+                    <span
+                      className={`flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold transition-all duration-300 ${
+                        isActive ? "bg-[#c6912c] text-black" : "bg-transparent border border-gray-600 text-gray-600"
+                      }`}
+                    >
+                      {step.number}
+                    </span>
+                    <h3 className={`text-sm font-semibold transition-colors duration-300 ${isActive ? "text-white" : "text-gray-600"}`}>
+                      {step.title}
+                    </h3>
+                  </div>
+                </button>
+              )
+            })}
+          </div>
+
+          <div className="text-left pr-8 mt-2">
+            <p className="text-sm text-gray-300 leading-relaxed">{currentStep.description}</p>
+          </div>
+        </div>
+
+        {/* Desktop carousel */}
+        <div className="hidden md:flex w-full justify-center px-6">
+          <div className="w-full max-w-[1400px]">
+            <div className="relative w-full aspect-[21/9]">
+              <Image
+                src={currentStep.image}
+                alt={currentStep.alt}
+                fill
+                className="object-cover object-center transition-opacity duration-300"
+                key={activeStep}
+              />
             </div>
 
-            <div className="grid grid-cols-3 gap-3 md:gap-8 max-w-5xl mx-auto">
-              {phases.map((phase, index) => (
-                <div key={index} className="text-center flex flex-col">
-                  <div className="text-3xl md:text-6xl font-bold text-[#c6912c]/20 mb-1 md:mb-4">{phase.step}</div>
-                  <h3 className="text-sm md:text-2xl font-bold text-white mb-1 md:mb-3 min-h-[2.5rem] md:min-h-0 flex items-center justify-center">
-                    {phase.title}
-                  </h3>
-                  <div className="w-8 md:w-12 h-0.5 md:h-1 bg-[#c6912c] mx-auto mb-1 md:mb-4" />
-                  <p className="text-[10px] md:text-base text-white/70 leading-tight">{phase.desc}</p>
-                </div>
-              ))}
+            <div className="grid grid-cols-3 gap-8 pt-12">
+              {STEPS.map((step, i) => {
+                const isActive = activeStep === i
+                return (
+                  <button
+                    key={i}
+                    onClick={() => setActiveStep(i)}
+                    className="relative text-center cursor-pointer transition-all hover:opacity-80"
+                  >
+                    <div className={`absolute top-0 left-0 right-0 h-[2px] transition-colors ${isActive ? "bg-[#c6912c]" : "bg-gray-700"}`} />
+
+                    <div className="flex items-center justify-center gap-3 pt-6 pb-4">
+                      <span
+                        className={`flex items-center justify-center w-10 h-10 rounded-full text-lg font-bold transition-all duration-300 ${
+                          isActive ? "bg-[#c6912c] text-black" : "bg-transparent border-2 border-gray-600 text-gray-600"
+                        }`}
+                      >
+                        {step.number}
+                      </span>
+                      <h3 className={`text-xl font-semibold transition-colors duration-300 ${isActive ? "text-white" : "text-gray-500"}`}>
+                        {step.title}
+                      </h3>
+                    </div>
+
+                    <p className={`text-xs sm:text-sm leading-relaxed px-1 sm:px-0 transition-colors ${isActive ? "text-white" : "text-gray-500"}`}>
+                      {step.description}
+                    </p>
+                  </button>
+                )
+              })}
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* CTA Section - Updated colors for dark theme */}
-        <section className="py-20 bg-black">
-          <div className="container mx-auto px-6 text-center">
-            {/* Two CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-              <Link href="/estimator">
-                <Button className="h-11 min-w-[200px] px-6 bg-[#c6912c] hover:bg-[#a67923] text-black font-semibold rounded-md transition-all">
-                  AI Estimator
-                </Button>
-              </Link>
-              <Link href="/contact">
-                <Button className="h-11 min-w-[200px] px-6 bg-transparent hover:bg-[#c6912c] text-white hover:text-black font-semibold rounded-md border-2 border-[#c6912c] transition-all">
-                  Contact Us
-                </Button>
-              </Link>
-            </div>
-
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-              Let's Build Something <span className="text-[#c6912c]">Amazing</span>
-            </h2>
-            <p className="text-xl text-white/70 max-w-2xl mx-auto">
-              Ready to start your project? Get in touch with our team today.
-            </p>
-          </div>
-        </section>
-
-        <Footer />
-      </main>
+      <Footer />
     </div>
   )
 }
