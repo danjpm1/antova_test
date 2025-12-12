@@ -308,8 +308,6 @@ export default function AntovaBuilders() {
 
   const topBgColor = isServiceCardsVisible ? "bg-white" : "bg-black"
   const bottomBgColor = isTestimonialsVisible ? "bg-black" : "bg-white"
-  const bottomTextColor = isTestimonialsVisible ? "text-white" : "text-black"
-  const bottomSubTextColor = isTestimonialsVisible ? "text-white/80" : "text-gray-700"
 
   return (
     <div className={`min-h-screen ${topBgColor} transition-colors duration-300 ease-in-out`}>
@@ -404,18 +402,14 @@ export default function AntovaBuilders() {
         </div>
       </section>
 
-      <section
-        id="about"
-        ref={testimonialsRef}
-        className={`py-24 lg:py-32 ${bottomBgColor} transition-colors duration-300 ease-in-out`}
-      >
+      <section id="about" className="py-24 lg:py-32 bg-white">
         <div className="px-4 lg:px-8 xl:px-12 w-full max-w-[1800px] mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
             <div className="space-y-8">
-              <h2 className={`text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight ${bottomTextColor} transition-colors duration-300 ease-in-out`}>
+              <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight text-black">
                 Smart. Thin. Strong.
               </h2>
-              <p className={`text-lg md:text-xl leading-relaxed ${bottomSubTextColor} transition-colors duration-300 ease-in-out`}>
+              <p className="text-lg md:text-xl leading-relaxed text-gray-700">
                 Our builds redefine precision and performance — crafted with purpose.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
@@ -452,7 +446,10 @@ export default function AntovaBuilders() {
         </div>
       </section>
 
-      <section className="py-24 lg:py-32 bg-black relative">
+      <section
+        ref={testimonialsRef}
+        className={`py-24 lg:py-32 ${bottomBgColor} transition-colors duration-300 ease-in-out relative`}
+      >
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#c6912c]/5 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 px-4 lg:px-8 xl:px-12 w-full max-w-[1800px] mx-auto">
