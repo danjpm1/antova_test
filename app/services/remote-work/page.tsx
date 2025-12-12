@@ -8,31 +8,31 @@ import { Footer } from "@/components/footer"
 const STEPS = [
   {
     number: "1",
-    title: "Scout",
-    description: "We assess the terrain, logistics, and challenges — no location is too remote for our team.",
+    title: "Design",
+    description: "Aerial imagery and 3D modeling determine your custom design.",
     image: "/aerial.jpg",
-    alt: "Remote mountain site assessment",
+    alt: "Aerial view of renovation design phase",
   },
   {
     number: "2",
-    title: "Mobilize",
-    description: "Helicopters, mules, or heavy machinery — we get crews and materials where others can't.",
+    title: "Installation",
+    description: "Our integrated design enables quick tile and Powerwall installation.",
     image: "/luxury-modern-cabin-interior-with-large-windows-wo1.jpg",
-    alt: "Remote construction mobilization",
+    alt: "Renovation installation phase",
   },
   {
     number: "3",
-    title: "Build",
-    description: "Your dream location becomes reality — built with precision, no matter how far off the grid.",
+    title: "Power On",
+    description: "Final cleanup is completed before system activation.",
     image: "/modern-luxury-home-at-night-with-warm-interior-lig.jpg",
-    alt: "Completed remote luxury home",
+    alt: "Completed renovation project",
   },
 ]
 
 const ROTATION_INTERVAL = 4000
 const SWIPE_THRESHOLD = 50
 
-export default function RemoteWorkPage() {
+export default function RenovationPage() {
   const [activeStep, setActiveStep] = useState(0)
   const touchStartX = useRef(0)
 
@@ -69,14 +69,14 @@ export default function RemoteWorkPage() {
       <section className="relative w-full">
         <div className="flex items-center justify-end px-4 sm:px-8 md:pr-24 lg:pr-32 pt-24 sm:pt-28 md:pt-20 lg:pt-24 pb-8 md:pb-16 lg:pb-20 bg-black">
           <h1 className="text-[2.5rem] sm:text-[3.5rem] md:text-[5rem] lg:text-[6.5rem] font-bold text-white tracking-tight">
-            REMOTE WORK
+            RENOVATION
           </h1>
         </div>
 
         <div className="relative w-full aspect-[16/9] md:aspect-[21/9] lg:aspect-[3/1]">
           <Image
             src="/luxury-modern-cabin-interior-with-large-windows-wo.jpg"
-            alt="Remote mountain construction"
+            alt="Luxury home renovation"
             fill
             className="object-cover object-center"
             priority
@@ -92,24 +92,23 @@ export default function RemoteWorkPage() {
           <div className="grid lg:grid-cols-2 gap-6 md:gap-16 mb-10 md:mb-20">
             <div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-1 md:mb-4">
-                Hard to Reach.
+                Luxury + Comfort.
               </h2>
               <p className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-light italic text-gray-400">
-                Not Hard to Build.
+                Built to Last Forever.
               </p>
             </div>
 
             <div className="space-y-4 md:space-y-6 text-[15px] md:text-lg text-gray-300 mt-4 lg:mt-0">
               <p className="leading-[1.7] md:leading-8">
-                Antova Builder specializes in construction on difficult terrain — mountaintops, remote valleys, islands,
-                and locations where standard contractors won't go.
+                For over a decade, Antova Builder has specialized in luxury home renovations — transforming outdated
+                spaces into timeless works of craftsmanship.
               </p>
               <p className="leading-[1.7] md:leading-8">
-                We deploy helicopters, specialized vehicles, and experienced crews who thrive in challenging conditions.
-                Whether it's airlifting materials to a peak or navigating roads that don't exist yet, we make the
-                impossible accessible.
+                We've learned that luxury isn't just about materials — it's about precision execution, attention to
+                detail, and understanding how our clients live. Every renovation is a partnership built on trust.
               </p>
-              <p className="font-semibold text-white pt-1 md:pt-2">If you can dream the location, we can build there.</p>
+              <p className="font-semibold text-white pt-1 md:pt-2">Excellence today, legacy tomorrow.</p>
             </div>
           </div>
         </div>
