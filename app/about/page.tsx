@@ -130,10 +130,11 @@ const IntroAnimation = ({ onComplete }: { onComplete: () => void }) => {
 }
 
 const teamMembers = [
-  { name: "Ragnar", title: "Construction Engineer" },
-  { name: "Lagertha", title: "Construction Engineer" },
-  { name: "Rollo", title: "Construction Engineer" },
-  { name: "Floki", title: "Construction Engineer" },
+  { name: "Matthew Shaffer", title: "CEO, Managing Principal", image: "/images/team/matthew-shaffer.jpg" },
+  { name: "Ragnar", title: "Construction Engineer", image: "/images/team/ragnar.jpg" },
+  { name: "Lagertha", title: "Construction Engineer", image: "/images/team/lagertha.jpg" },
+  { name: "Rollo", title: "Construction Engineer", image: "/images/team/rollo.jpg" },
+  { name: "Floki", title: "Construction Engineer", image: "/images/team/floki.jpg" },
 ]
 
 const sections = [
@@ -200,6 +201,38 @@ const SectionCard = ({
         </p>
       </div>
     </div>
+  </div>
+)
+
+const TeamMemberCard = ({ name, title, image }: { name: string; title: string; image: string }) => (
+  <div className="flex flex-col items-center">
+    <div className="w-full aspect-[3/4] bg-gray-100 overflow-hidden mb-6">
+      <img 
+        src={image} 
+        alt={name}
+        className="w-full h-full object-cover"
+        onError={(e) => {
+          const target = e.target as HTMLImageElement
+          target.style.display = 'none'
+        }}
+      />
+    </div>
+    <h3 
+      className="text-2xl md:text-3xl tracking-[0.25em] uppercase text-center mb-2"
+      style={{ 
+        fontFamily: "Georgia, 'Times New Roman', serif",
+        color: "#3a3a3a",
+        fontWeight: 400,
+      }}
+    >
+      {name.split(' ').join('  ')}
+    </h3>
+    <p 
+      className="text-base md:text-lg tracking-wide text-center"
+      style={{ color: "#5ba4a4" }}
+    >
+      {title}
+    </p>
   </div>
 )
 
@@ -302,52 +335,31 @@ export default function AboutPage() {
         ))}
       </section>
 
-      <section className="relative w-full bg-white pt-16 pb-14 md:pt-24 md:pb-24">
-        <div className="px-6 md:px-12 lg:px-24">
-          <h2
-            className="mb-14 uppercase md:mb-16 text-gray-500 tracking-tight"
-            style={{ fontSize: "var(--text-heading-lg)" }}
-          >
-            OUR TEAM
-          </h2>
-
-          <div className="mb-14 max-w-4xl">
-            <p
-              className="leading-relaxed text-gray-800"
-              style={{ fontSize: "var(--text-body-lg)" }}
+      <section className="relative w-full bg-white py-20 md:py-32">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+          <div className="text-center mb-16 md:mb-24">
+            <h2 
+              className="text-3xl md:text-4xl tracking-[0.3em] uppercase mb-4"
+              style={{ 
+                fontFamily: "Georgia, 'Times New Roman', serif",
+                color: "#3a3a3a",
+                fontWeight: 400,
+              }}
             >
-              Antova&apos;s team blends master craftsmanship with AI-powered precision to shape complexity into luxury.
-              Every project reflects our commitment to excellence and innovation.
-            </p>
+              TEAM
+            </h2>
+            <div className="w-12 h-0.5 mx-auto" style={{ backgroundColor: "#5ba4a4" }} />
           </div>
 
-          <div className="space-y-8">
-            <div className="flex justify-start">
-              <div className="ml-auto w-full bg-white shadow-sm md:w-[calc(50%-1rem)] lg:w-[calc(25%-1.5rem)]">
-                <div className="aspect-[16/10] bg-gray-200" />
-                <div className="p-3" style={{ backgroundColor: "var(--primary)" }}>
-                  <h3 className="mb-1 text-base font-semibold text-black">Matthew Shaffer</h3>
-                  <p className="text-xs text-black">CEO, Managing Principal</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap gap-7">
-              {teamMembers.map((member, index) => (
-                <div
-                  key={`${member.name}-${index}`}
-                  className={`w-full bg-white shadow-sm md:w-[calc(50%-1rem)] lg:w-[calc(25%-1.5rem)] ${
-                    index === 3 ? "lg:ml-auto" : ""
-                  }`}
-                >
-                  <div className="aspect-[16/10] bg-gray-200" />
-                  <div className="p-3" style={{ backgroundColor: "var(--primary)" }}>
-                    <h3 className="mb-1 text-base font-semibold text-black">{member.name}</h3>
-                    <p className="text-xs text-black">{member.title}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16 md:gap-y-24 lg:gap-x-20">
+            {teamMembers.map((member, index) => (
+              <TeamMemberCard 
+                key={`${member.name}-${index}`}
+                name={member.name}
+                title={member.title}
+                image={member.image}
+              />
+            ))}
           </div>
         </div>
       </section>
