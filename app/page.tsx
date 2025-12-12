@@ -310,13 +310,7 @@ export default function AntovaBuilders() {
 
   return (
     <div className={`min-h-screen ${topBgColor} transition-colors duration-300 ease-in-out`}>
-      <div
-        className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-500 ease-in-out ${
-          showNavbar ? "translate-y-0" : "-translate-y-full"
-        }`}
-      >
-        <Navbar />
-      </div>
+      <Navbar hidden={!showNavbar} />
 
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
