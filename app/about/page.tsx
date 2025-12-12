@@ -200,32 +200,29 @@ const SectionCard = ({
 
 const TeamMemberCard = ({ name, title }: { name: string; title: string }) => {
   return (
-    <div className="flex flex-col items-center">
+    <div 
+      className="flex flex-col border-t-2 pt-6 transition-all duration-300 hover:bg-black/[0.02]"
+      style={{ 
+        backgroundColor: "rgba(0,0,0,0.02)",
+        borderTopColor: "var(--primary)",
+      }}
+    >
       <div 
-        className="w-full aspect-[5/4] overflow-hidden mb-4 flex items-center justify-center"
-        style={{ backgroundColor: "#e5e5e5" }}
+        className="w-full aspect-[4/3] overflow-hidden mb-6 flex items-center justify-center bg-gray-100"
       >
-        <User size={80} color="#9ca3af" />
+        <User size={72} className="text-[#c6912c]/30" />
       </div>
-      <h3 
-        className="text-xl md:text-2xl tracking-[0.2em] text-center mb-1"
-        style={{ 
-          fontFamily: "'Bebas Neue', sans-serif",
-          color: "#3a3a3a",
-          fontWeight: 400,
-        }}
-      >
-        {name}
-      </h3>
-      <p 
-        className="text-sm md:text-base tracking-wide text-center"
-        style={{ 
-          fontFamily: "'Inter', sans-serif",
-          color: "#c6912c",
-        }}
-      >
-        {title}
-      </p>
+      <div className="px-5 pb-6">
+        <h3 
+          className="text-lg md:text-xl tracking-[0.1em] mb-1 text-gray-900"
+          style={{ fontWeight: 500 }}
+        >
+          {name}
+        </h3>
+        <p className="text-sm tracking-wide text-gray-600">
+          {title}
+        </p>
+      </div>
     </div>
   )
 }
@@ -329,23 +326,18 @@ export default function AboutPage() {
         ))}
       </section>
 
-      <section className="relative w-full bg-white py-16 md:py-24">
+      <section className="relative w-full bg-white py-20 md:py-28">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-          <div className="text-center mb-12 md:mb-16">
+          <div className="mb-16 md:mb-20">
             <h2 
-              className="text-3xl md:text-4xl tracking-[0.3em] uppercase mb-4"
-              style={{ 
-                fontFamily: "'Bebas Neue', sans-serif",
-                color: "#3a3a3a",
-                fontWeight: 400,
-              }}
+              className="text-3xl md:text-4xl tracking-[0.2em] uppercase text-gray-900"
+              style={{ fontWeight: 500 }}
             >
               OUR TEAM
             </h2>
-            <div className="w-12 h-0.5 mx-auto" style={{ backgroundColor: "#c6912c" }} />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12 md:gap-y-16 lg:gap-x-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {teamMembers.map((member, index) => (
               <TeamMemberCard 
                 key={`${member.name}-${index}`}
