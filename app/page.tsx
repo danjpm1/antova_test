@@ -278,8 +278,7 @@ export default function AntovaBuilders() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [showNavbar, setShowNavbar] = useState(false)
   const [showTitle, setShowTitle] = useState(false)
-  const [showSubtitle, setShowSubtitle] = useState(false)
-  const [showButtons, setShowButtons] = useState(false)
+  const [showSubtitleAndButtons, setShowSubtitleAndButtons] = useState(false)
   const serviceCardsRef = useRef<HTMLElement>(null)
   const testimonialsRef = useRef<HTMLElement>(null)
 
@@ -287,16 +286,13 @@ export default function AntovaBuilders() {
   const isTestimonialsVisible = useScrollThreshold(testimonialsRef, TESTIMONIALS_THRESHOLD)
 
   useEffect(() => {
-    // Intro animation sequence
     const titleTimer = setTimeout(() => setShowTitle(true), 300)
-    const subtitleTimer = setTimeout(() => setShowSubtitle(true), 800)
-    const buttonsTimer = setTimeout(() => setShowButtons(true), 1300)
+    const subtitleTimer = setTimeout(() => setShowSubtitleAndButtons(true), 1000)
     const navbarTimer = setTimeout(() => setShowNavbar(true), 1800)
 
     return () => {
       clearTimeout(titleTimer)
       clearTimeout(subtitleTimer)
-      clearTimeout(buttonsTimer)
       clearTimeout(navbarTimer)
     }
   }, [])
@@ -338,14 +334,14 @@ export default function AntovaBuilders() {
           </h1>
           <p 
             className={`text-lg md:text-xl lg:text-2xl mb-4 text-white/90 tracking-wide text-balance transition-all duration-700 ease-out ${
-              showSubtitle ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              showSubtitleAndButtons ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
             Precision Built. Luxury Perfected.
           </p>
           <div 
             className={`flex flex-col sm:flex-row items-center justify-center gap-3 transition-all duration-700 ease-out ${
-              showButtons ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              showSubtitleAndButtons ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
             <Button
