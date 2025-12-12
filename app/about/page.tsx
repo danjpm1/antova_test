@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef, useCallback } from "react"
+import { User } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 
@@ -8,7 +9,6 @@ const IntroAnimation = ({ onComplete }: { onComplete: () => void }) => {
   const [phase, setPhase] = useState<"text" | "fade" | "logo" | "reveal">("text")
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
-  // Subtle film grain effect
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -26,11 +26,9 @@ const IntroAnimation = ({ onComplete }: { onComplete: () => void }) => {
     let animationId: number
 
     const animate = () => {
-      // Pure black background
       ctx.fillStyle = "#0a0a0a"
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-      // Very subtle noise/grain
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
       const data = imageData.data
       
@@ -74,10 +72,8 @@ const IntroAnimation = ({ onComplete }: { onComplete: () => void }) => {
         phase === "reveal" ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
     >
-      {/* Black background with subtle grain */}
       <canvas ref={canvasRef} className="absolute inset-0" />
 
-      {/* Text: "About" - gray with white sweep reveal */}
       <div
         className={`absolute z-10 transition-opacity duration-500 ease-in-out ${
           phase === "text" ? "opacity-100" : "opacity-0"
@@ -99,7 +95,6 @@ const IntroAnimation = ({ onComplete }: { onComplete: () => void }) => {
         </h1>
       </div>
 
-      {/* Logo - 60% larger */}
       <div
         className={`absolute z-10 transition-opacity duration-500 ease-in-out ${
           phase === "logo" || phase === "reveal" ? "opacity-100" : "opacity-0"
@@ -112,7 +107,6 @@ const IntroAnimation = ({ onComplete }: { onComplete: () => void }) => {
         />
       </div>
 
-      {/* Inline keyframes */}
       <style dangerouslySetInnerHTML={{
         __html: `
           @keyframes textReveal {
@@ -130,11 +124,11 @@ const IntroAnimation = ({ onComplete }: { onComplete: () => void }) => {
 }
 
 const teamMembers = [
-  { name: "Matthew Shaffer", title: "CEO, Managing Principal", image: "/images/team/matthew-shaffer.jpg" },
-  { name: "Ragnar", title: "Construction Engineer", image: "/images/team/ragnar.jpg" },
-  { name: "Lagertha", title: "Construction Engineer", image: "/images/team/lagertha.jpg" },
-  { name: "Rollo", title: "Construction Engineer", image: "/images/team/rollo.jpg" },
-  { name: "Floki", title: "Construction Engineer", image: "/images/team/floki.jpg" },
+  { name: "Matthew Shaffer", title: "CEO, Managing Principal" },
+  { name: "Ragnar", title: "Construction Engineer" },
+  { name: "Lagertha", title: "Construction Engineer" },
+  { name: "Rollo", title: "Construction Engineer" },
+  { name: "Floki", title: "Construction Engineer" },
 ]
 
 const sections = [
@@ -204,35 +198,27 @@ const SectionCard = ({
   </div>
 )
 
-const TeamMemberCard = ({ name, title, image }: { name: string; title: string; image: string }) => {
-  const formattedName = name.toUpperCase().split('').join(' ')
-  
+const TeamMemberCard = ({ name, title }: { name: string; title: string }) => {
   return (
     <div className="flex flex-col items-center">
-      <div className="w-full aspect-[16/10] bg-gray-100 overflow-hidden mb-8">
-        <img 
-          src={image} 
-          alt={name}
-          className="w-full h-full object-cover"
-          onError={(e) => {
-            const target = e.target as HTMLImageElement
-            target.style.display = 'none'
-          }}
-        />
+      <div 
+        className="w-full aspect-[16/10] overflow-hidden mb-4 flex items-center justify-center"
+        style={{ backgroundColor: "#e5e5e5" }}
+      >
+        <User size={64} color="#9ca3af" />
       </div>
       <h3 
-        className="text-2xl md:text-[28px] lg:text-[32px] tracking-[0.35em] uppercase text-center mb-3"
+        className="text-xl md:text-2xl tracking-[0.2em] text-center mb-1"
         style={{ 
           fontFamily: "'Bebas Neue', sans-serif",
           color: "#3a3a3a",
           fontWeight: 400,
-          letterSpacing: "0.35em",
         }}
       >
-        {formattedName}
+        {name}
       </h3>
       <p 
-        className="text-base md:text-lg tracking-wide text-center"
+        className="text-sm md:text-base tracking-wide text-center"
         style={{ 
           fontFamily: "'Inter', sans-serif",
           color: "#c6912c",
@@ -343,11 +329,11 @@ export default function AboutPage() {
         ))}
       </section>
 
-      <section className="relative w-full bg-white py-24 md:py-36">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16">
-          <div className="text-center mb-20 md:mb-28">
+      <section className="relative w-full bg-white py-16 md:py-24">
+        <div className="max-w-[1200px] mx-auto px-6 md:px-12">
+          <div className="text-center mb-12 md:mb-16">
             <h2 
-              className="text-4xl md:text-5xl tracking-[0.35em] uppercase mb-5"
+              className="text-3xl md:text-4xl tracking-[0.3em] uppercase mb-4"
               style={{ 
                 fontFamily: "'Bebas Neue', sans-serif",
                 color: "#3a3a3a",
@@ -356,16 +342,15 @@ export default function AboutPage() {
             >
               OUR TEAM
             </h2>
-            <div className="w-14 h-0.5 mx-auto" style={{ backgroundColor: "#c6912c" }} />
+            <div className="w-12 h-0.5 mx-auto" style={{ backgroundColor: "#c6912c" }} />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-20 md:gap-y-28 lg:gap-x-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-10 md:gap-y-14 lg:gap-x-10">
             {teamMembers.map((member, index) => (
               <TeamMemberCard 
                 key={`${member.name}-${index}`}
                 name={member.name}
                 title={member.title}
-                image={member.image}
               />
             ))}
           </div>
