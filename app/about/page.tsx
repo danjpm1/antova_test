@@ -77,14 +77,14 @@ const IntroAnimation = ({ onComplete }: { onComplete: () => void }) => {
       {/* Black background with subtle grain */}
       <canvas ref={canvasRef} className="absolute inset-0" />
 
-      {/* Text: "About" - 30% larger */}
+      {/* Text: "About" - fades out */}
       <div
         className={`absolute z-10 transition-opacity duration-500 ease-in-out ${
           phase === "text" ? "opacity-100" : "opacity-0"
         }`}
       >
         <h1
-          className="text-6xl md:text-7xl lg:text-9xl font-normal tracking-wide"
+          className="text-5xl md:text-6xl lg:text-7xl font-normal tracking-wide"
           style={{ color: "white" }}
         >
           About
@@ -100,7 +100,7 @@ const IntroAnimation = ({ onComplete }: { onComplete: () => void }) => {
         <img
           src="/antova-logo-gold.svg"
           alt="Antova Logo"
-          className="h-20 md:h-26 lg:h-32 w-auto"
+          className="h-[19px] md:h-[26px] lg:h-[32px] w-auto"
         />
       </div>
     </div>
