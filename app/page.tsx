@@ -11,7 +11,6 @@ import Link from "next/link"
 const SCROLL_THRESHOLD = 50
 const SERVICE_CARDS_THRESHOLD = 0.5
 const TESTIMONIALS_THRESHOLD = 0.5
-const NAVBAR_REVEAL_THRESHOLD = 0.1
 
 const SERVICE_CARDS = [
   {
@@ -278,6 +277,9 @@ function useScrollThreshold(ref: React.RefObject<HTMLElement | null>, threshold:
 export default function AntovaBuilders() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [showNavbar, setShowNavbar] = useState(false)
+  const [showTitle, setShowTitle] = useState(false)
+  const [showSubtitle, setShowSubtitle] = useState(false)
+  const [showButtons, setShowButtons] = useState(false)
   const serviceCardsRef = useRef<HTMLElement>(null)
   const testimonialsRef = useRef<HTMLElement>(null)
 
@@ -285,9 +287,23 @@ export default function AntovaBuilders() {
   const isTestimonialsVisible = useScrollThreshold(testimonialsRef, TESTIMONIALS_THRESHOLD)
 
   useEffect(() => {
+    // Intro animation sequence
+    const titleTimer = setTimeout(() => setShowTitle(true), 300)
+    const subtitleTimer = setTimeout(() => setShowSubtitle(true), 800)
+    const buttonsTimer = setTimeout(() => setShowButtons(true), 1300)
+    const navbarTimer = setTimeout(() => setShowNavbar(true), 1800)
+
+    return () => {
+      clearTimeout(titleTimer)
+      clearTimeout(subtitleTimer)
+      clearTimeout(buttonsTimer)
+      clearTimeout(navbarTimer)
+    }
+  }, [])
+
+  useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > SCROLL_THRESHOLD)
-      setShowNavbar(window.scrollY > window.innerHeight * NAVBAR_REVEAL_THRESHOLD)
     }
     handleScroll()
     window.addEventListener("scroll", handleScroll)
@@ -313,13 +329,25 @@ export default function AntovaBuilders() {
         </div>
 
         <div className="relative z-10 px-6 lg:px-12 xl:px-16 text-center w-full -mt-32 md:-mt-40">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2 tracking-tight text-balance text-white">
+          <h1 
+            className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-2 tracking-tight text-balance text-white transition-all duration-700 ease-out ${
+              showTitle ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
+          >
             Antova Builders
           </h1>
-          <p className="text-lg md:text-xl lg:text-2xl mb-4 text-white/90 tracking-wide text-balance">
+          <p 
+            className={`text-lg md:text-xl lg:text-2xl mb-4 text-white/90 tracking-wide text-balance transition-all duration-700 ease-out ${
+              showSubtitle ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
+          >
             Precision Built. Luxury Perfected.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <div 
+            className={`flex flex-col sm:flex-row items-center justify-center gap-3 transition-all duration-700 ease-out ${
+              showButtons ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
+          >
             <Button
               size="lg"
               className="min-w-[264px] h-[40px] bg-[#c6912c] hover:bg-[#a67923] text-black font-medium px-[34px] py-0 text-sm tracking-wide rounded-[4px] shadow-lg hover:shadow-[#c6912c]/50 transition-all hover:scale-105"
