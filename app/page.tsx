@@ -167,7 +167,7 @@ function OfferCard({ title, description, price, image, alt, exploreHref, explore
         <img
           src={image || "/placeholder.svg"}
           alt={alt}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 text-transparent"
+          className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105 text-transparent"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-black/30" />
 
@@ -241,7 +241,7 @@ function TestimonialCard({ headline, service, quote, author, role, company, vide
           <img
             src={videoThumbnail || "/placeholder.svg"}
             alt={`${author} testimonial video`}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 text-transparent"
+            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 text-transparent"
           />
           <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-300" />
           <PlayIcon />
@@ -318,7 +318,7 @@ export default function AntovaBuilders() {
           <img
             src="/hero-winter-mountain-home.png"
             alt="Luxury mountain chalet in winter with warm interior lighting"
-            className="w-full h-full object-cover text-transparent"
+            className="w-full h-full object-cover object-center text-transparent"
           />
           <div className="absolute inset-0 bg-black/25" />
         </div>
@@ -438,7 +438,7 @@ export default function AntovaBuilders() {
                 <img
                   src="/modern-minimalist-architecture-exterior-detail-bla.jpg"
                   alt="Modern architectural detail"
-                  className="w-full h-auto object-cover grayscale text-transparent"
+                  className="w-full h-auto object-cover object-center grayscale text-transparent"
                 />
               </div>
             </div>
@@ -496,7 +496,7 @@ export default function AntovaBuilders() {
           <img
             src="/modern-luxury-home-at-night-with-warm-interior-lig.jpg"
             alt="Modern home at dusk"
-            className="w-full h-full object-cover text-transparent"
+            className="w-full h-full object-cover object-center text-transparent"
           />
           <div className="absolute inset-0 bg-black/30" />
         </div>
