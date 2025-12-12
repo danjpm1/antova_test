@@ -4,6 +4,234 @@ import { useState, useEffect, useRef } from "react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 
+const IntroAnimation = ({ onComplete }: { onComplete: () => void }) => {
+  const [phase, setPhase] = useState<"text" | "morphing" | "logo" | "reveal">("text")
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const ctx = canvas.getContext("2d")
+    if (!ctx) return
+
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+
+    const particles: Array<{
+      x: number
+      y: number
+      size: number
+      speedX: number
+      speedY: number
+      opacity: number
+    }> = []
+
+    for (let i = 0; i < 80; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 2 + 0.5,
+        speedX: (Math.random() - 0.5) * 0.5,
+        speedY: (Math.random() - 0.5) * 0.5,
+        opacity: Math.random() * 0.5 + 0.2,
+      })
+    }
+
+    let flareX = canvas.width * 0.3
+    let flareY = canvas.height * 0.6
+    let flareAngle = 0
+
+    let animationId: number
+
+    const animate = () => {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.1)"
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+      particles.forEach((p) => {
+        p.x += p.speedX
+        p.y += p.speedY
+
+        if (p.x < 0) p.x = canvas.width
+        if (p.x > canvas.width) p.x = 0
+        if (p.y < 0) p.y = canvas.height
+        if (p.y > canvas.height) p.y = 0
+
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`
+        ctx.fill()
+      })
+
+      flareAngle += 0.02
+      const gradient = ctx.createRadialGradient(flareX, flareY, 0, flareX, flareY, 150)
+      gradient.addColorStop(0, "rgba(255, 255, 255, 0.8)")
+      gradient.addColorStop(0.1, "rgba(255, 220, 150, 0.4)")
+      gradient.addColorStop(0.3, "rgba(255, 180, 100, 0.1)")
+      gradient.addColorStop(1, "rgba(0, 0, 0, 0)")
+
+      ctx.beginPath()
+      ctx.arc(flareX, flareY, 150, 0, Math.PI * 2)
+      ctx.fillStyle = gradient
+      ctx.fill()
+
+      const rayLength = 300
+      const rayColors = [
+        "rgba(255, 100, 100, 0.3)",
+        "rgba(100, 255, 100, 0.3)",
+        "rgba(100, 100, 255, 0.3)",
+      ]
+
+      rayColors.forEach((color, i) => {
+        const angle = flareAngle + (i * Math.PI) / 3
+        ctx.beginPath()
+        ctx.moveTo(flareX, flareY)
+        ctx.lineTo(
+          flareX + Math.cos(angle) * rayLength,
+          flareY + Math.sin(angle) * rayLength
+        )
+        ctx.strokeStyle = color
+        ctx.lineWidth = 2
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.moveTo(flareX, flareY)
+        ctx.lineTo(
+          flareX - Math.cos(angle) * rayLength,
+          flareY - Math.sin(angle) * rayLength
+        )
+        ctx.stroke()
+      })
+
+      const warmGradient = ctx.createRadialGradient(0, 0, 0, 0, 0, canvas.width * 0.5)
+      warmGradient.addColorStop(0, "rgba(255, 150, 50, 0.15)")
+      warmGradient.addColorStop(1, "rgba(0, 0, 0, 0)")
+      ctx.fillStyle = warmGradient
+      ctx.fillRect(0, 0, canvas.width * 0.5, canvas.height * 0.5)
+
+      animationId = requestAnimationFrame(animate)
+    }
+
+    ctx.fillStyle = "black"
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    animate()
+
+    return () => cancelAnimationFrame(animationId)
+  }, [])
+
+  useEffect(() => {
+    const timer1 = setTimeout(() => setPhase("morphing"), 1200)
+    const timer2 = setTimeout(() => setPhase("logo"), 1800)
+    const timer3 = setTimeout(() => setPhase("reveal"), 3200)
+    const timer4 = setTimeout(() => onComplete(), 3800)
+
+    return () => {
+      clearTimeout(timer1)
+      clearTimeout(timer2)
+      clearTimeout(timer3)
+      clearTimeout(timer4)
+    }
+  }, [onComplete])
+
+  return (
+    <div
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-opacity duration-700 ${
+        phase === "reveal" ? "opacity-0 pointer-events-none" : "opacity-100"
+      }`}
+    >
+      <canvas ref={canvasRef} className="absolute inset-0" />
+
+      <div className="relative z-10 flex flex-col items-center justify-center">
+        <div
+          className={`absolute transition-all duration-700 ease-in-out ${
+            phase === "text"
+              ? "opacity-100 scale-100 blur-0"
+              : "opacity-0 scale-95 blur-sm"
+          }`}
+        >
+          <h1
+            className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight"
+            style={{ color: "var(--primary)" }}
+          >
+            ABOUT
+          </h1>
+        </div>
+
+        <div
+          className={`absolute transition-all duration-700 ease-in-out ${
+            phase === "morphing"
+              ? "opacity-100 scale-100 blur-0"
+              : phase === "logo"
+              ? "opacity-100 scale-100 blur-0"
+              : "opacity-0 scale-105 blur-sm"
+          }`}
+          style={{
+            transform:
+              phase === "logo"
+                ? "translateY(-20px) scale(0.8)"
+                : "translateY(0) scale(1)",
+            transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
+          }}
+        >
+          <img
+            src="/antova-logo-gold.svg"
+            alt="Antova Logo"
+            className="h-16 md:h-20 lg:h-24 w-auto"
+          />
+        </div>
+
+        <div
+          className={`absolute mt-32 transition-all duration-500 ${
+            phase === "logo"
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-4"
+          }`}
+        >
+          <p
+            className="text-sm md:text-base tracking-[0.3em] uppercase"
+            style={{ color: "var(--primary)" }}
+          >
+            Luxury Construction
+          </p>
+        </div>
+      </div>
+
+      <div
+        className={`absolute bottom-12 transition-opacity duration-500 ${
+          phase === "logo" ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        <div className="flex space-x-1">
+          {[0, 1, 2].map((i) => (
+            <div
+              key={i}
+              className="w-1.5 h-1.5 rounded-full"
+              style={{
+                backgroundColor: "var(--primary)",
+                animation: `pulse 1s ease-in-out ${i * 0.2}s infinite`,
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
+      <style jsx>{`
+        @keyframes pulse {
+          0%,
+          100% {
+            opacity: 0.3;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1.2);
+          }
+        }
+      `}</style>
+    </div>
+  )
+}
+
 const teamMembers = [
   { name: "Ragnar", title: "Construction Engineer" },
   { name: "Lagertha", title: "Construction Engineer" },
@@ -81,6 +309,7 @@ const SectionCard = ({
 export default function AboutPage() {
   const [scrollY, setScrollY] = useState(0)
   const [activeCard, setActiveCard] = useState(1)
+  const [showIntro, setShowIntro] = useState(true)
 
   const sectionRefs = [
     useRef<HTMLDivElement>(null),
@@ -114,6 +343,8 @@ export default function AboutPage() {
 
   return (
     <div className="min-h-screen w-full bg-black">
+      {showIntro && <IntroAnimation onComplete={() => setShowIntro(false)} />}
+      
       <Navbar />
 
       <section className="pt-32 pb-20 lg:pt-40 lg:pb-28 bg-black">
