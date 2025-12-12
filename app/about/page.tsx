@@ -77,7 +77,7 @@ const IntroAnimation = ({ onComplete }: { onComplete: () => void }) => {
       {/* Black background with subtle grain */}
       <canvas ref={canvasRef} className="absolute inset-0" />
 
-      {/* Text: "About" - fades out */}
+      {/* Text: "About" - gray with white sweep reveal */}
       <div
         className={`absolute z-10 transition-opacity duration-500 ease-in-out ${
           phase === "text" ? "opacity-100" : "opacity-0"
@@ -85,7 +85,15 @@ const IntroAnimation = ({ onComplete }: { onComplete: () => void }) => {
       >
         <h1
           className="text-5xl md:text-6xl lg:text-7xl font-normal tracking-wide"
-          style={{ color: "white" }}
+          style={{ 
+            background: "linear-gradient(90deg, white 0%, white 50%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.2) 100%)",
+            backgroundSize: "200% 100%",
+            backgroundPosition: "100% 0",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+            animation: "textReveal 1.2s ease-out forwards",
+          }}
         >
           About
         </h1>
@@ -103,6 +111,20 @@ const IntroAnimation = ({ onComplete }: { onComplete: () => void }) => {
           className="h-[77px] md:h-[102px] lg:h-[128px] w-auto"
         />
       </div>
+
+      {/* Inline keyframes */}
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @keyframes textReveal {
+            0% {
+              background-position: 100% 0;
+            }
+            100% {
+              background-position: 0% 0;
+            }
+          }
+        `
+      }} />
     </div>
   )
 }
