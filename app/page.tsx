@@ -9,7 +9,6 @@ import { Footer } from "@/components/footer"
 import Link from "next/link"
 
 const SCROLL_THRESHOLD = 50
-const PHILOSOPHY_THRESHOLD = 0.8
 const SERVICE_CARDS_THRESHOLD = 0.5
 
 const SERVICE_CARDS = [
@@ -276,10 +275,8 @@ function useScrollThreshold(ref: React.RefObject<HTMLElement | null>, threshold:
 
 export default function AntovaBuilders() {
   const [isScrolled, setIsScrolled] = useState(false)
-  const philosophyRef = useRef<HTMLDivElement>(null)
-  const serviceCardsRef = useRef<HTMLDivElement>(null)
+  const serviceCardsRef = useRef<HTMLElement>(null)
 
-  const isPhilosophyVisible = useScrollThreshold(philosophyRef, PHILOSOPHY_THRESHOLD)
   const isServiceCardsVisible = useScrollThreshold(serviceCardsRef, SERVICE_CARDS_THRESHOLD)
 
   useEffect(() => {
@@ -291,10 +288,8 @@ export default function AntovaBuilders() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const bgColor = isPhilosophyVisible ? "bg-black" : "bg-white"
-  const textColor = isPhilosophyVisible ? "text-white" : "text-black"
-  const serviceCardsBgColor = isServiceCardsVisible ? "bg-white" : "bg-black"
-  const serviceCardsTextColor = isServiceCardsVisible ? "text-black" : "text-white"
+  const bgColor = isServiceCardsVisible ? "bg-white" : "bg-black"
+  const textColor = isServiceCardsVisible ? "text-black" : "text-white"
 
   return (
     <div className={`min-h-screen ${bgColor} transition-colors duration-300 ease-in-out`}>
@@ -336,8 +331,20 @@ export default function AntovaBuilders() {
         </div>
       </section>
 
-      <section className="py-20 lg:py-28">
-        <div ref={philosophyRef} className="px-4 lg:px-8 xl:px-12 w-full max-w-[1800px] mx-auto mb-32 lg:mb-40">
+      <section className="py-20 lg:py-28 bg-black">
+        <div className="px-4 lg:px-8 xl:px-12 w-full max-w-[1800px] mx-auto mb-32 lg:mb-40">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-16 text-left text-white">
+            Get your offer now.
+          </h2>
+
+          <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+            {OFFER_CARDS.map((card) => (
+              <OfferCard key={card.title} {...card} />
+            ))}
+          </div>
+        </div>
+
+        <div className="px-4 lg:px-8 xl:px-12 w-full max-w-[1800px] mx-auto">
           <div className="max-w-[1000px] border-l-2 border-[#c6912c] pl-8 lg:pl-12">
             <p className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-white leading-snug font-light">
               Luxury is the freedom to relax while experts handle complexity.
@@ -348,26 +355,12 @@ export default function AntovaBuilders() {
             </p>
           </div>
         </div>
-
-        <div className="px-4 lg:px-8 xl:px-12 w-full max-w-[1800px] mx-auto">
-          <h2
-            className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-16 text-left ${textColor} transition-colors duration-300 ease-in-out`}
-          >
-            Get your offer now.
-          </h2>
-
-          <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
-            {OFFER_CARDS.map((card) => (
-              <OfferCard key={card.title} {...card} />
-            ))}
-          </div>
-        </div>
       </section>
 
       <section
         id="services"
         ref={serviceCardsRef}
-        className={`py-24 lg:py-32 ${serviceCardsBgColor} ${serviceCardsTextColor} transition-colors duration-300 ease-in-out`}
+        className={`py-24 lg:py-32 ${bgColor} transition-colors duration-300 ease-in-out`}
       >
         <div className="px-4 lg:px-8 xl:px-12 w-full max-w-[1800px] mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
