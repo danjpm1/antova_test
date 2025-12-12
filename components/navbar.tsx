@@ -25,7 +25,11 @@ function cn(...classes: (string | false | undefined)[]) {
   return classes.filter(Boolean).join(" ")
 }
 
-export function Navbar() {
+interface NavbarProps {
+  hidden?: boolean
+}
+
+export function Navbar({ hidden = false }: NavbarProps) {
   const { isMenuOpen, setIsMenuOpen } = useMobileMenu()
   const pathname = usePathname()
 
@@ -33,7 +37,12 @@ export function Navbar() {
     <React.Fragment>
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} currentPath={pathname} />
 
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black h-16">
+      <nav
+        className={cn(
+          "fixed top-0 left-0 right-0 z-50 bg-black h-16 transition-transform duration-500 ease-in-out",
+          hidden && "-translate-y-full"
+        )}
+      >
         <div className="w-full px-8 lg:px-12 xl:px-20 h-full flex items-center justify-between">
           <Logo />
 
@@ -106,7 +115,7 @@ function SocialIcons({ variant }: { variant: "desktop" | "mobile" }) {
   return (
     <React.Fragment>
       {socials.map(({ url, icon: Icon, name }) => (
-        <a
+        
           key={url}
           href={url}
           target="_blank"
