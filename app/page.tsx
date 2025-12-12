@@ -10,6 +10,7 @@ import Link from "next/link"
 
 const SCROLL_THRESHOLD = 50
 const SERVICE_CARDS_THRESHOLD = 0.5
+const TESTIMONIALS_THRESHOLD = 0.5
 
 const SERVICE_CARDS = [
   {
@@ -279,8 +280,10 @@ export default function AntovaBuilders() {
   const [showTitle, setShowTitle] = useState(false)
   const [showSubtitleAndButtons, setShowSubtitleAndButtons] = useState(false)
   const serviceCardsRef = useRef<HTMLElement>(null)
+  const testimonialsRef = useRef<HTMLElement>(null)
 
   const isServiceCardsVisible = useScrollThreshold(serviceCardsRef, SERVICE_CARDS_THRESHOLD)
+  const isTestimonialsVisible = useScrollThreshold(testimonialsRef, TESTIMONIALS_THRESHOLD)
 
   useEffect(() => {
     const titleTimer = setTimeout(() => setShowTitle(true), 300)
@@ -304,6 +307,9 @@ export default function AntovaBuilders() {
   }, [])
 
   const topBgColor = isServiceCardsVisible ? "bg-white" : "bg-black"
+  const bottomBgColor = isTestimonialsVisible ? "bg-black" : "bg-white"
+  const bottomTextColor = isTestimonialsVisible ? "text-white" : "text-black"
+  const bottomSubTextColor = isTestimonialsVisible ? "text-white/80" : "text-gray-700"
 
   return (
     <div className={`min-h-screen ${topBgColor} transition-colors duration-300 ease-in-out`}>
@@ -398,14 +404,18 @@ export default function AntovaBuilders() {
         </div>
       </section>
 
-      <section id="about" className="py-24 lg:py-32 bg-white">
+      <section
+        id="about"
+        ref={testimonialsRef}
+        className={`py-24 lg:py-32 ${bottomBgColor} transition-colors duration-300 ease-in-out`}
+      >
         <div className="px-4 lg:px-8 xl:px-12 w-full max-w-[1800px] mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
             <div className="space-y-8">
-              <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight text-black">
+              <h2 className={`text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight ${bottomTextColor} transition-colors duration-300 ease-in-out`}>
                 Smart. Thin. Strong.
               </h2>
-              <p className="text-lg md:text-xl leading-relaxed text-gray-700">
+              <p className={`text-lg md:text-xl leading-relaxed ${bottomSubTextColor} transition-colors duration-300 ease-in-out`}>
                 Our builds redefine precision and performance — crafted with purpose.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
