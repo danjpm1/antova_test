@@ -204,37 +204,45 @@ const SectionCard = ({
   </div>
 )
 
-const TeamMemberCard = ({ name, title, image }: { name: string; title: string; image: string }) => (
-  <div className="flex flex-col items-center">
-    <div className="w-full aspect-[3/4] bg-gray-100 overflow-hidden mb-6">
-      <img 
-        src={image} 
-        alt={name}
-        className="w-full h-full object-cover"
-        onError={(e) => {
-          const target = e.target as HTMLImageElement
-          target.style.display = 'none'
+const TeamMemberCard = ({ name, title, image }: { name: string; title: string; image: string }) => {
+  const formattedName = name.toUpperCase().split('').join(' ')
+  
+  return (
+    <div className="flex flex-col items-center">
+      <div className="w-full aspect-[16/10] bg-gray-100 overflow-hidden mb-8">
+        <img 
+          src={image} 
+          alt={name}
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement
+            target.style.display = 'none'
+          }}
+        />
+      </div>
+      <h3 
+        className="text-2xl md:text-[28px] lg:text-[32px] tracking-[0.35em] uppercase text-center mb-3"
+        style={{ 
+          fontFamily: "'Bebas Neue', sans-serif",
+          color: "#3a3a3a",
+          fontWeight: 400,
+          letterSpacing: "0.35em",
         }}
-      />
+      >
+        {formattedName}
+      </h3>
+      <p 
+        className="text-base md:text-lg tracking-wide text-center"
+        style={{ 
+          fontFamily: "'Inter', sans-serif",
+          color: "#c6912c",
+        }}
+      >
+        {title}
+      </p>
     </div>
-    <h3 
-      className="text-2xl md:text-3xl tracking-[0.25em] uppercase text-center mb-2"
-      style={{ 
-        fontFamily: "Georgia, 'Times New Roman', serif",
-        color: "#3a3a3a",
-        fontWeight: 400,
-      }}
-    >
-      {name.split(' ').join('  ')}
-    </h3>
-    <p 
-      className="text-base md:text-lg tracking-wide text-center"
-      style={{ color: "#5ba4a4" }}
-    >
-      {title}
-    </p>
-  </div>
-)
+  )
+}
 
 export default function AboutPage() {
   const [scrollY, setScrollY] = useState(0)
@@ -335,23 +343,23 @@ export default function AboutPage() {
         ))}
       </section>
 
-      <section className="relative w-full bg-white py-20 md:py-32">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
-          <div className="text-center mb-16 md:mb-24">
+      <section className="relative w-full bg-white py-24 md:py-36">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16">
+          <div className="text-center mb-20 md:mb-28">
             <h2 
-              className="text-3xl md:text-4xl tracking-[0.3em] uppercase mb-4"
+              className="text-4xl md:text-5xl tracking-[0.35em] uppercase mb-5"
               style={{ 
-                fontFamily: "Georgia, 'Times New Roman', serif",
+                fontFamily: "'Bebas Neue', sans-serif",
                 color: "#3a3a3a",
                 fontWeight: 400,
               }}
             >
-              TEAM
+              OUR TEAM
             </h2>
-            <div className="w-12 h-0.5 mx-auto" style={{ backgroundColor: "#5ba4a4" }} />
+            <div className="w-14 h-0.5 mx-auto" style={{ backgroundColor: "#c6912c" }} />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16 md:gap-y-24 lg:gap-x-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-20 md:gap-y-28 lg:gap-x-12">
             {teamMembers.map((member, index) => (
               <TeamMemberCard 
                 key={`${member.name}-${index}`}
