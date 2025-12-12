@@ -1,10 +1,10 @@
 "use client"
 
+import React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Facebook, Instagram, Menu, X } from "lucide-react"
 import { useMobileMenu } from "./mobile-menu-context"
-import React from "react"
 
 type NavItem = { path: string; text: string }
 type SocialLink = { url: string; icon: typeof Facebook; name: string }
@@ -34,7 +34,7 @@ export function Navbar({ hidden = false }: NavbarProps) {
   const pathname = usePathname()
 
   return (
-    <React.Fragment>
+    <>
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} currentPath={pathname} />
 
       <nav
@@ -67,7 +67,7 @@ export function Navbar({ hidden = false }: NavbarProps) {
           </button>
         </div>
       </nav>
-    </React.Fragment>
+    </>
   )
 }
 
@@ -97,7 +97,7 @@ function NavLink({
       href={href}
       className={cn(
         "text-[15px] font-semibold transition-colors relative text-white",
-        !active && "hover:text-[#c6912c]",
+        !active && "hover:text-[#c6912c]"
       )}
     >
       {children}
@@ -113,9 +113,9 @@ function SocialIcons({ variant }: { variant: "desktop" | "mobile" }) {
   }
 
   return (
-    <React.Fragment>
+    <>
       {socials.map(({ url, icon: Icon, name }) => (
-        
+        <a
           key={url}
           href={url}
           target="_blank"
@@ -126,7 +126,7 @@ function SocialIcons({ variant }: { variant: "desktop" | "mobile" }) {
           <Icon size={24} />
         </a>
       ))}
-    </React.Fragment>
+    </>
   )
 }
 
@@ -143,11 +143,13 @@ function MobileMenu({
     <div
       className={cn(
         "md:hidden fixed top-16 right-0 w-[72%] h-[calc(100vh-4rem)] bg-black z-40 transition-opacity duration-700",
-        isOpen ? "opacity-100" : "opacity-0 pointer-events-none",
+        isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
       )}
     >
       <div className="h-full flex flex-col px-10 pt-16">
-        <p className="text-[#c6912c] text-sm font-semibold tracking-[0.2em] uppercase mb-8">BUILDING YOUR DREAM HOME</p>
+        <p className="text-[#c6912c] text-sm font-semibold tracking-[0.2em] uppercase mb-8">
+          BUILDING YOUR DREAM HOME
+        </p>
 
         <nav className="flex flex-col gap-7">
           {nav.map(({ path, text }) => (
@@ -157,7 +159,7 @@ function MobileMenu({
               onClick={onClose}
               className={cn(
                 "text-2xl font-semibold tracking-wide uppercase transition-colors",
-                currentPath === path ? "text-[#c6912c]" : "text-white hover:text-[#c6912c]",
+                currentPath === path ? "text-[#c6912c]" : "text-white hover:text-[#c6912c]"
               )}
             >
               {text}
