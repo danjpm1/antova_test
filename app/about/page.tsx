@@ -100,7 +100,7 @@ const IntroAnimation = ({ onComplete }: { onComplete: () => void }) => {
         <img
           src="/antova-logo-gold.svg"
           alt="Antova Logo"
-          className="h-[19px] md:h-[26px] lg:h-[32px] w-auto"
+          className="h-[77px] md:h-[102px] lg:h-[128px] w-auto"
         />
       </div>
     </div>
