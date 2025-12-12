@@ -310,7 +310,7 @@ export default function AntovaBuilders() {
   const bottomBgColor = isTestimonialsVisible ? "bg-black" : "bg-white"
 
   return (
-    <div className={`min-h-screen ${topBgColor} transition-colors duration-300 ease-in-out`}>
+    <div className={`min-h-screen ${topBgColor} transition-colors duration-300 ease-in-out overflow-x-hidden`}>
       <Navbar hidden={!showNavbar} />
 
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -345,15 +345,15 @@ export default function AntovaBuilders() {
           >
             <Button
               size="lg"
-              className="min-w-[264px] h-[40px] bg-[#c6912c] hover:bg-[#a67923] text-black font-medium px-[34px] py-0 text-sm tracking-wide rounded-[4px] shadow-lg hover:shadow-[#c6912c]/50 transition-all hover:scale-105"
+              className="w-full sm:w-auto sm:min-w-[264px] h-[40px] bg-[#c6912c] hover:bg-[#a67923] text-black font-medium px-[34px] py-0 text-sm tracking-wide rounded-[4px] shadow-lg hover:shadow-[#c6912c]/50 transition-all hover:scale-105"
             >
               AI Estimator
             </Button>
-            <Link href="/contact">
+            <Link href="/contact" className="w-full sm:w-auto">
               <Button
                 size="lg"
                 variant="outline"
-                className="min-w-[264px] h-[40px] border-2 border-white text-white hover:bg-white hover:text-black font-medium px-[34px] py-0 text-sm tracking-wide rounded-[4px] transition-all hover:scale-105 bg-transparent"
+                className="w-full sm:min-w-[264px] h-[40px] border-2 border-white text-white hover:bg-white hover:text-black font-medium px-[34px] py-0 text-sm tracking-wide rounded-[4px] transition-all hover:scale-105 bg-transparent"
               >
                 Consult With Us
               </Button>
@@ -413,19 +413,19 @@ export default function AntovaBuilders() {
                 Our builds redefine precision and performance — crafted with purpose.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <Link href="/contact" scroll={true}>
+                <Link href="/contact" scroll={true} className="w-full sm:w-auto">
                   <Button
                     size="lg"
-                    className="min-w-[200px] w-[200px] min-h-[48px] h-[48px] bg-[#c6912c] hover:bg-[#a67923] text-white font-medium text-sm tracking-wide rounded-[4px] shadow-lg transition-all hover:scale-105"
+                    className="w-full sm:w-[200px] min-h-[48px] h-[48px] bg-[#c6912c] hover:bg-[#a67923] text-white font-medium text-sm tracking-wide rounded-[4px] shadow-lg transition-all hover:scale-105"
                   >
                     Consult With Us
                   </Button>
                 </Link>
-                <Link href="/projects" scroll={true}>
+                <Link href="/projects" scroll={true} className="w-full sm:w-auto">
                   <Button
                     size="lg"
                     variant="outline"
-                    className="min-w-[200px] w-[200px] min-h-[48px] h-[48px] border border-[#c6912c] text-[#c6912c] hover:bg-[#c6912c] hover:text-white bg-transparent font-medium text-sm tracking-wide rounded-[4px] transition-all hover:scale-105"
+                    className="w-full sm:w-[200px] min-h-[48px] h-[48px] border border-[#c6912c] text-[#c6912c] hover:bg-[#c6912c] hover:text-white bg-transparent font-medium text-sm tracking-wide rounded-[4px] transition-all hover:scale-105"
                   >
                     View Projects
                   </Button>
@@ -448,7 +448,7 @@ export default function AntovaBuilders() {
 
       <section
         ref={testimonialsRef}
-        className={`py-24 lg:py-32 ${bottomBgColor} transition-colors duration-300 ease-in-out relative`}
+        className={`py-24 lg:py-32 ${bottomBgColor} transition-colors duration-300 ease-in-out relative overflow-hidden`}
       >
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#c6912c]/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -470,19 +470,19 @@ export default function AntovaBuilders() {
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-16 lg:mt-20">
-            <Link href="/projects" scroll={true}>
+            <Link href="/projects" scroll={true} className="w-full sm:w-auto">
               <Button
                 size="lg"
-                className="min-w-[264px] h-[48px] bg-[#c6912c] hover:bg-[#a67923] text-white font-medium text-sm tracking-wide rounded-[4px] shadow-lg transition-all hover:scale-105"
+                className="w-full sm:min-w-[264px] h-[48px] bg-[#c6912c] hover:bg-[#a67923] text-white font-medium text-sm tracking-wide rounded-[4px] shadow-lg transition-all hover:scale-105"
               >
                 View All Projects
               </Button>
             </Link>
-            <Link href="/contact" scroll={true}>
+            <Link href="/contact" scroll={true} className="w-full sm:w-auto">
               <Button
                 size="lg"
                 variant="outline"
-                className="min-w-[264px] h-[48px] border border-white/20 text-white hover:bg-white hover:text-black bg-transparent font-medium text-sm tracking-wide rounded-[4px] transition-all hover:scale-105"
+                className="w-full sm:min-w-[264px] h-[48px] border border-white/20 text-white hover:bg-white hover:text-black bg-transparent font-medium text-sm tracking-wide rounded-[4px] transition-all hover:scale-105"
               >
                 Start Your Project
               </Button>
@@ -511,7 +511,7 @@ export default function AntovaBuilders() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Button
               size="lg"
-              className="min-w-[264px] h-[40px] bg-[#c6912c] hover:bg-[#a67923] text-white font-medium text-sm tracking-wide rounded-[4px] shadow-lg transition-all hover:scale-105"
+              className="w-full sm:w-auto sm:min-w-[264px] h-[40px] bg-[#c6912c] hover:bg-[#a67923] text-white font-medium text-sm tracking-wide rounded-[4px] shadow-lg transition-all hover:scale-105"
             >
               Explore AI Estimator
             </Button>
@@ -519,7 +519,7 @@ export default function AntovaBuilders() {
               size="lg"
               variant="outline"
               asChild
-              className="min-w-[264px] h-[40px] border border-[#c6912c] text-white hover:bg-[#c6912c] hover:text-white bg-transparent font-medium text-sm tracking-wide rounded-[4px] transition-all hover:scale-105"
+              className="w-full sm:w-auto sm:min-w-[264px] h-[40px] border border-[#c6912c] text-white hover:bg-[#c6912c] hover:text-white bg-transparent font-medium text-sm tracking-wide rounded-[4px] transition-all hover:scale-105"
             >
               <Link href="/about">Our Story</Link>
             </Button>
