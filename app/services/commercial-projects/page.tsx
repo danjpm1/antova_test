@@ -67,24 +67,24 @@ export default function CommercialPage() {
       <Navbar />
 
       <section className="relative w-full">
-        <div className="flex items-center justify-end px-4 sm:px-8 md:pr-24 lg:pr-32 h-[30vh] bg-black">
+        <div className="flex items-center justify-end px-4 sm:px-8 md:pr-24 lg:pr-32 pt-24 sm:pt-28 md:pt-20 lg:pt-24 pb-8 md:pb-16 lg:pb-20 bg-black">
           <h1 className="text-[2.5rem] sm:text-[3.5rem] md:text-[5rem] lg:text-[6.5rem] font-bold text-white tracking-tight">
             COMMERCIAL
           </h1>
         </div>
 
-        <div className="relative w-full h-[70vh]">
+        <div className="relative w-full aspect-[16/9] md:aspect-[21/9] lg:aspect-[3/1]">
           <Image
             src="/luxury-modern-cabin-interior-with-large-windows-wo.jpg"
             alt="Modern commercial space"
             fill
-            className="object-cover"
+            className="object-cover object-center"
             priority
           />
         </div>
       </section>
 
-      <div className="bg-black h-32" />
+      <div className="bg-black h-16 md:h-32" />
       <div className="w-full h-[2px] bg-[#D4A574]" />
 
       <section className="bg-black text-white py-12 md:py-32">
@@ -126,8 +126,8 @@ export default function CommercialPage() {
             >
               {STEPS.map((step, i) => (
                 <div key={i} className="w-full flex-shrink-0">
-                  <div className="relative w-full h-[300px] mb-6">
-                    <Image src={step.image} alt={step.alt} fill className="object-cover" />
+                  <div className="relative w-full aspect-[4/3] mb-6">
+                    <Image src={step.image} alt={step.alt} fill className="object-cover object-center" />
                   </div>
                 </div>
               ))}
@@ -165,12 +165,12 @@ export default function CommercialPage() {
         {/* Desktop carousel */}
         <div className="hidden md:flex w-full justify-center px-6">
           <div className="w-full max-w-[1400px]">
-            <div className="relative w-full h-[350px] md:h-[450px] lg:h-[500px]">
+            <div className="relative w-full aspect-[21/9]">
               <Image
                 src={currentStep.image}
                 alt={currentStep.alt}
                 fill
-                className="object-cover transition-opacity duration-300"
+                className="object-cover object-center transition-opacity duration-300"
                 key={activeStep}
               />
             </div>
