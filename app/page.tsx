@@ -11,7 +11,7 @@ import Link from "next/link"
 const SCROLL_THRESHOLD = 50
 const SERVICE_CARDS_THRESHOLD = 0.5
 const TESTIMONIALS_THRESHOLD = 0.5
-const NAVBAR_REVEAL_THRESHOLD = 0.8
+const NAVBAR_REVEAL_THRESHOLD = 0.1
 
 const SERVICE_CARDS = [
   {
@@ -121,16 +121,6 @@ function QuoteIcon() {
     <svg className="w-8 h-8 text-[#c6912c]/30" fill="currentColor" viewBox="0 0 24 24">
       <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
     </svg>
-  )
-}
-
-function ScrollIndicator() {
-  return (
-    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
-      <svg className="w-6 h-6 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-      </svg>
-    </div>
   )
 }
 
@@ -347,8 +337,6 @@ export default function AntovaBuilders() {
             </Link>
           </div>
         </div>
-
-        <ScrollIndicator />
       </section>
 
       <section className="py-20 lg:py-28 bg-black">
@@ -432,96 +420,3 @@ export default function AntovaBuilders() {
 
             <div className="relative lg:ml-auto flex justify-end">
               <div className="rounded-3xl overflow-hidden shadow-2xl w-full max-w-[520px] lg:max-w-[580px]">
-                <img
-                  src="/modern-minimalist-architecture-exterior-detail-bla.jpg"
-                  alt="Modern architectural detail"
-                  className="w-full h-auto object-cover grayscale"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-24 lg:py-32 bg-black relative">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#c6912c]/5 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="relative z-10 px-4 lg:px-8 xl:px-12 w-full max-w-[1800px] mx-auto">
-          <div className="max-w-3xl mb-16 lg:mb-20">
-            <p className="text-[#c6912c] font-medium tracking-[0.2em] uppercase text-sm mb-4">Testimonials</p>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight">
-              Stories of Excellence
-            </h2>
-            <p className="text-white/60 text-lg md:text-xl leading-relaxed">
-              Hear from clients who trusted Antova with their most ambitious projects.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {TESTIMONIALS.map((testimonial) => (
-              <TestimonialCard key={testimonial.headline} {...testimonial} />
-            ))}
-          </div>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-16 lg:mt-20">
-            <Link href="/projects" scroll={true}>
-              <Button
-                size="lg"
-                className="min-w-[264px] h-[48px] bg-[#c6912c] hover:bg-[#a67923] text-white font-medium text-sm tracking-wide rounded-[4px] shadow-lg transition-all hover:scale-105"
-              >
-                View All Projects
-              </Button>
-            </Link>
-            <Link href="/contact" scroll={true}>
-              <Button
-                size="lg"
-                variant="outline"
-                className="min-w-[264px] h-[48px] border border-white/20 text-white hover:bg-white hover:text-black bg-transparent font-medium text-sm tracking-wide rounded-[4px] transition-all hover:scale-105"
-              >
-                Start Your Project
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-24">
-        <div className="absolute inset-0 z-0">
-          <img
-            src="/modern-luxury-home-at-night-with-warm-interior-lig.jpg"
-            alt="Modern home at dusk"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black/30" />
-        </div>
-
-        <div className="relative z-10 px-6 lg:px-12 xl:px-16 text-center w-full">
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight text-balance">
-            Built with Intelligence.
-          </h2>
-          <p className="text-xl md:text-2xl mb-12 text-black/90 max-w-3xl mx-auto text-balance">
-            Powered by AI-driven estimation and real-time material insights.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Button
-              size="lg"
-              className="min-w-[264px] h-[40px] bg-[#c6912c] hover:bg-[#a67923] text-white font-medium text-sm tracking-wide rounded-[4px] shadow-lg transition-all hover:scale-105"
-            >
-              Explore AI Estimator
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              asChild
-              className="min-w-[264px] h-[40px] border border-[#c6912c] text-white hover:bg-[#c6912c] hover:text-white bg-transparent font-medium text-sm tracking-wide rounded-[4px] transition-all hover:scale-105"
-            >
-              <Link href="/about">Our Story</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
-  )
-}
