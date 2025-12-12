@@ -8,31 +8,31 @@ import { Footer } from "@/components/footer"
 const STEPS = [
   {
     number: "1",
-    title: "Scout",
-    description: "We assess the terrain, logistics, and challenges — no location is too remote for our team.",
+    title: "Design",
+    description: "We craft architectural visions that balance ambition with practicality from the ground up.",
     image: "/aerial.jpg",
-    alt: "Remote mountain site assessment",
+    alt: "Luxury home aerial view with pool",
   },
   {
     number: "2",
-    title: "Mobilize",
-    description: "Helicopters, mules, or heavy machinery — we get crews and materials where others can't.",
+    title: "Build",
+    description: "Construction is creation – we bring your vision to life with precision and purpose.",
     image: "/luxury-modern-cabin-interior-with-large-windows-wo1.jpg",
-    alt: "Remote construction mobilization",
+    alt: "New home construction",
   },
   {
     number: "3",
-    title: "Build",
-    description: "Your dream location becomes reality — built with precision, no matter how far off the grid.",
+    title: "Live it",
+    description: "Move into the home you've always imagined — built for your life, not someone else's.",
     image: "/modern-luxury-home-at-night-with-warm-interior-lig.jpg",
-    alt: "Completed remote luxury home",
+    alt: "Completed luxury home at night",
   },
 ]
 
 const ROTATION_INTERVAL = 4000
 const SWIPE_THRESHOLD = 50
 
-export default function RemoteWorkPage() {
+export default function NewBuildsPage() {
   const [activeStep, setActiveStep] = useState(0)
   const touchStartX = useRef(0)
 
@@ -69,14 +69,14 @@ export default function RemoteWorkPage() {
       <section className="relative w-full">
         <div className="flex items-center justify-end px-4 sm:px-8 md:pr-24 lg:pr-32 pt-24 sm:pt-28 md:pt-20 lg:pt-24 pb-8 md:pb-16 lg:pb-20 bg-black">
           <h1 className="text-[2.5rem] sm:text-[3.5rem] md:text-[5rem] lg:text-[6.5rem] font-bold text-white tracking-tight">
-            REMOTE WORK
+            NEW BUILDS
           </h1>
         </div>
 
         <div className="relative w-full aspect-[16/9] md:aspect-[21/9] lg:aspect-[3/1]">
           <Image
             src="/luxury-modern-cabin-interior-with-large-windows-wo.jpg"
-            alt="Remote mountain construction"
+            alt="Modern luxury new build"
             fill
             className="object-cover object-center"
             priority
@@ -92,24 +92,24 @@ export default function RemoteWorkPage() {
           <div className="grid lg:grid-cols-2 gap-6 md:gap-16 mb-10 md:mb-20">
             <div>
               <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-1 md:mb-4">
-                Hard to Reach.
+                Your Vision.
               </h2>
               <p className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-light italic text-gray-400">
-                Not Hard to Build.
+                Built From the Ground Up.
               </p>
             </div>
 
             <div className="space-y-4 md:space-y-6 text-[15px] md:text-lg text-gray-300 mt-4 lg:mt-0">
               <p className="leading-[1.7] md:leading-8">
-                Antova Builder specializes in construction on difficult terrain — mountaintops, remote valleys, islands,
-                and locations where standard contractors won't go.
+                Antova Builder specializes in luxury new construction, creating homes from scratch that reflect your
+                lifestyle and exceed your expectations.
               </p>
               <p className="leading-[1.7] md:leading-8">
-                We deploy helicopters, specialized vehicles, and experienced crews who thrive in challenging conditions.
-                Whether it's airlifting materials to a peak or navigating roads that don't exist yet, we make the
-                impossible accessible.
+                Building new isn't just about blueprints and materials; it's about understanding how you want to live.
+                Through close collaboration and expert craftsmanship, we turn empty lots into homes that feel like
+                they've always been yours.
               </p>
-              <p className="font-semibold text-white pt-1 md:pt-2">If you can dream the location, we can build there.</p>
+              <p className="font-semibold text-white pt-1 md:pt-2">Your dream, our foundation.</p>
             </div>
           </div>
         </div>
