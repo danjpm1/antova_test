@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef, useCallback } from "react"
-import { User } from "lucide-react"
+import { User, X } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 
@@ -124,11 +124,36 @@ const IntroAnimation = ({ onComplete }: { onComplete: () => void }) => {
 }
 
 const teamMembers = [
-  { name: "Matthew Shaffer", title: "CEO, Managing Principal" },
-  { name: "Ragnar", title: "Construction Engineer" },
-  { name: "Lagertha", title: "Construction Engineer" },
-  { name: "Rollo", title: "Construction Engineer" },
-  { name: "Floki", title: "Construction Engineer" },
+  { 
+    name: "Matthew Shaffer", 
+    title: "CEO, Managing Principal",
+    image: "/images/team/matthew-shaffer.jpg",
+    bio: "With over two decades of experience in luxury construction, Matthew founded Antova Builders on the principle that exceptional craftsmanship should come with exceptional service. His vision drives every project we undertake."
+  },
+  { 
+    name: "Ragnar", 
+    title: "Construction Engineer",
+    image: "/images/team/ragnar.jpg",
+    bio: "A master of structural engineering, Ragnar brings precision and innovation to every build. His expertise in modern construction techniques ensures our projects exceed industry standards."
+  },
+  { 
+    name: "Lagertha", 
+    title: "Construction Engineer",
+    image: "/images/team/lagertha.jpg",
+    bio: "Lagertha specializes in sustainable building practices and green certifications. Her commitment to environmental responsibility shapes our approach to modern luxury construction."
+  },
+  { 
+    name: "Rollo", 
+    title: "Construction Engineer",
+    image: "/images/team/rollo.jpg",
+    bio: "With a background in commercial and residential mega-projects, Rollo manages complex builds with remarkable efficiency. His leadership ensures timelines and budgets are always respected."
+  },
+  { 
+    name: "Floki", 
+    title: "Construction Engineer",
+    image: "/images/team/floki.jpg",
+    bio: "Floki is our creative problem-solver, bringing artistic sensibility to technical challenges. His innovative solutions have become signature elements in many of our most celebrated projects."
+  },
 ]
 
 const sections = [
@@ -198,31 +223,190 @@ const SectionCard = ({
   </div>
 )
 
-const TeamMemberCard = ({ name, title }: { name: string; title: string }) => {
+interface TeamMember {
+  name: string
+  title: string
+  image: string
+  bio: string
+}
+
+const TeamMemberModal = ({ 
+  member, 
+  isOpen, 
+  onClose 
+}: { 
+  member: TeamMember | null
+  isOpen: boolean
+  onClose: () => void 
+}) => {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = ""
+    }
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [isOpen])
+
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose()
+    }
+    window.addEventListener("keydown", handleEscape)
+    return () => window.removeEventListener("keydown", handleEscape)
+  }, [onClose])
+
+  if (!member) return null
+
+  return (
+    <div
+      className={`fixed inset-0 z-[100] flex items-center justify-center transition-all duration-500 ${
+        isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+      }`}
+      onClick={onClose}
+    >
+      {/* Backdrop */}
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
+      
+      {/* Modal Card */}
+      <div
+        className={`relative bg-white max-w-lg w-[90%] mx-4 overflow-hidden transition-all duration-500 ${
+          isOpen ? "scale-100 translate-y-0" : "scale-95 translate-y-8"
+        }`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center bg-white/90 hover:bg-white rounded-full transition-all duration-300 group shadow-lg"
+          aria-label="Close modal"
+        >
+          <X size={20} className="text-gray-800 group-hover:rotate-90 transition-transform duration-300" />
+        </button>
+
+        {/* Image */}
+        <div className="w-full aspect-[4/3] overflow-hidden bg-gray-100 flex items-center justify-center">
+          {member.image ? (
+            <img
+              src={member.image}
+              alt={member.name}
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                e.currentTarget.style.display = "none"
+                e.currentTarget.nextElementSibling?.classList.remove("hidden")
+              }}
+            />
+          ) : null}
+          <div className={`flex items-center justify-center ${member.image ? "hidden" : ""}`}>
+            <User size={96} className="text-[#c6912c]/30" />
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="p-8 md:p-10">
+          <div className="border-l-2 border-[#c6912c] pl-6">
+            <h3 className="text-2xl md:text-3xl font-medium tracking-wide text-gray-900 mb-1">
+              {member.name}
+            </h3>
+            <p className="text-sm tracking-widest uppercase text-[#c6912c] mb-6">
+              {member.title}
+            </p>
+            <p className="text-gray-600 leading-relaxed">
+              {member.bio}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const TeamMemberCard = ({ 
+  member, 
+  onExpand 
+}: { 
+  member: TeamMember
+  onExpand: () => void 
+}) => {
+  const [isHovered, setIsHovered] = useState(false)
+
   return (
     <div 
-      className="flex flex-col border-t-2 pt-6 transition-all duration-300 hover:bg-black/[0.02]"
+      className="relative flex flex-col border-t-2 pt-6 transition-all duration-300 cursor-pointer group"
       style={{ 
         backgroundColor: "rgba(0,0,0,0.02)",
         borderTopColor: "var(--primary)",
       }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onClick={onExpand}
     >
-      <div 
-        className="w-full aspect-[4/3] overflow-hidden mb-6 flex items-center justify-center bg-gray-100"
+      {/* Expand Button */}
+      <button
+        className={`absolute top-4 right-4 z-10 w-9 h-9 flex items-center justify-center bg-white rounded-full shadow-md transition-all duration-300 ${
+          isHovered ? "scale-110 shadow-lg" : "scale-100"
+        }`}
+        aria-label={`Learn more about ${member.name}`}
+        onClick={(e) => {
+          e.stopPropagation()
+          onExpand()
+        }}
       >
-        <User size={72} className="text-[#c6912c]/30" />
+        <svg 
+          width="14" 
+          height="14" 
+          viewBox="0 0 14 14" 
+          fill="none" 
+          className={`transition-transform duration-300 ${isHovered ? "rotate-90" : ""}`}
+        >
+          <path 
+            d="M7 1V13M1 7H13" 
+            stroke="#1a1a1a" 
+            strokeWidth="2" 
+            strokeLinecap="round"
+          />
+        </svg>
+      </button>
+
+      {/* Image Placeholder */}
+      <div 
+        className="w-full aspect-[4/3] overflow-hidden mb-6 flex items-center justify-center bg-gray-100 transition-all duration-500 group-hover:bg-gray-50"
+      >
+        {member.image ? (
+          <img
+            src={member.image}
+            alt={member.name}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            onError={(e) => {
+              e.currentTarget.style.display = "none"
+              e.currentTarget.nextElementSibling?.classList.remove("hidden")
+            }}
+          />
+        ) : null}
+        <div className={`flex items-center justify-center ${member.image ? "hidden" : ""}`}>
+          <User size={72} className="text-[#c6912c]/30" />
+        </div>
       </div>
+
+      {/* Text Content */}
       <div className="px-5 pb-6">
         <h3 
-          className="text-lg md:text-xl tracking-[0.1em] mb-1 text-gray-900"
+          className="text-lg md:text-xl tracking-[0.1em] mb-1 text-gray-900 transition-colors duration-300 group-hover:text-[#c6912c]"
           style={{ fontWeight: 500 }}
         >
-          {name}
+          {member.name}
         </h3>
         <p className="text-sm tracking-wide text-gray-600">
-          {title}
+          {member.title}
         </p>
       </div>
+
+      {/* Hover Overlay Hint */}
+      <div className={`absolute inset-0 border-2 border-[#c6912c] pointer-events-none transition-opacity duration-300 ${
+        isHovered ? "opacity-100" : "opacity-0"
+      }`} />
     </div>
   )
 }
@@ -231,6 +415,8 @@ export default function AboutPage() {
   const [scrollY, setScrollY] = useState(0)
   const [activeCard, setActiveCard] = useState(1)
   const [showIntro, setShowIntro] = useState(true)
+  const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const sectionRefs = [
     useRef<HTMLDivElement>(null),
@@ -265,6 +451,16 @@ export default function AboutPage() {
   const handleIntroComplete = useCallback(() => {
     setShowIntro(false)
   }, [])
+
+  const handleExpandMember = (member: TeamMember) => {
+    setSelectedMember(member)
+    setIsModalOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+    setTimeout(() => setSelectedMember(null), 300)
+  }
 
   return (
     <div className="min-h-screen w-full bg-black">
@@ -341,8 +537,8 @@ export default function AboutPage() {
             {teamMembers.map((member, index) => (
               <TeamMemberCard 
                 key={`${member.name}-${index}`}
-                name={member.name}
-                title={member.title}
+                member={member}
+                onExpand={() => handleExpandMember(member)}
               />
             ))}
           </div>
@@ -350,6 +546,13 @@ export default function AboutPage() {
       </section>
 
       <Footer />
+
+      {/* Modal */}
+      <TeamMemberModal 
+        member={selectedMember}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </div>
   )
 }
