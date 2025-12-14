@@ -272,7 +272,7 @@ const TeamMemberModal = ({
       
       {/* Modal Card */}
       <div
-        className={`relative bg-white max-w-lg w-[90%] mx-4 overflow-hidden transition-all duration-500 ${
+        className={`relative bg-white max-w-lg w-[90%] mx-4 overflow-hidden transition-all duration-500 rounded-lg ${
           isOpen ? "scale-100 translate-y-0" : "scale-95 translate-y-8"
         }`}
         onClick={(e) => e.stopPropagation()}
@@ -334,7 +334,7 @@ const TeamMemberCard = ({
 
   return (
     <div 
-      className="relative flex flex-col border-t-2 pt-6 transition-all duration-300 cursor-pointer group"
+      className="relative flex flex-col border-t-2 pt-6 transition-all duration-300 cursor-pointer group rounded-lg overflow-hidden"
       style={{ 
         backgroundColor: "rgba(0,0,0,0.02)",
         borderTopColor: "var(--primary)",
@@ -404,7 +404,7 @@ const TeamMemberCard = ({
       </div>
 
       {/* Hover Overlay Hint */}
-      <div className={`absolute inset-0 border-2 border-[#c6912c] pointer-events-none transition-opacity duration-300 ${
+      <div className={`absolute inset-0 border-2 border-[#c6912c] pointer-events-none transition-opacity duration-300 rounded-lg ${
         isHovered ? "opacity-100" : "opacity-0"
       }`} />
     </div>
