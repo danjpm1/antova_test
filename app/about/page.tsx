@@ -273,8 +273,8 @@ const TeamMemberModal = ({
       }`}
       onClick={onClose}
     >
-      {/* Backdrop with blur */}
-      <div className="absolute inset-0 bg-white/80 backdrop-blur-md" />
+      {/* Backdrop - lighter blur to see cards behind */}
+      <div className="absolute inset-0 bg-white/60 backdrop-blur-sm" />
       
       {/* Close Button - Fixed position top right */}
       <button
@@ -293,17 +293,17 @@ const TeamMemberModal = ({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Title Section */}
-        <div className="mb-6">
-          <p className="text-sm tracking-widest uppercase text-gray-500 mb-2">
+        <div className="mb-8">
+          <p className="text-base md:text-lg tracking-widest uppercase text-gray-500 mb-3 font-medium">
             {member.title}
           </p>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-gray-900 tracking-tight">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 tracking-tight leading-none">
             {member.name}
           </h2>
         </div>
 
         {/* Image */}
-        <div className="w-full aspect-[16/10] overflow-hidden rounded-lg bg-gray-100 flex items-center justify-center mb-8">
+        <div className="w-full aspect-[16/10] overflow-hidden rounded-lg bg-gray-100 flex items-center justify-center mb-8 shadow-2xl">
           {member.image ? (
             <img
               src={member.image}
@@ -321,7 +321,7 @@ const TeamMemberModal = ({
         </div>
 
         {/* Bio Text */}
-        <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-xl">
+        <p className="text-xl md:text-2xl text-gray-700 leading-relaxed max-w-xl font-normal">
           {member.bio}
         </p>
       </div>
