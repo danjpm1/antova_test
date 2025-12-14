@@ -128,7 +128,7 @@ const teamMembers = [
     name: "Matthew Shaffer", 
     title: "CEO, Managing Principal",
     image: "/images/team/matthew-shaffer.jpg",
-    bio: "With over two decades of experience in luxury construction, Matthew founded Antova Builders on the principle that exceptional craftsmanship should come with exceptional service. His vision drives every project we undertake."
+    bio: "Matthew founded Antova Builders on the principle that exceptional craftsmanship should come with exceptional service. His sharp vision for luxury construction and client-first approach drives every project we undertake."
   },
   { 
     name: "Ragnar", 
@@ -153,6 +153,12 @@ const teamMembers = [
     title: "Construction Engineer",
     image: "/images/team/floki.jpg",
     bio: "Floki is our creative problem-solver, bringing artistic sensibility to technical challenges. His innovative solutions have become signature elements in many of our most celebrated projects."
+  },
+  { 
+    name: "Daniel Anghel", 
+    title: "IT & AI Systems Support",
+    image: "/images/team/daniel-anghel.jpg",
+    bio: "Daniel drives our technological innovation, integrating cutting-edge AI systems and IT infrastructure to streamline operations. His expertise ensures Antova Builders stays at the forefront of construction technology."
   },
 ]
 
@@ -267,27 +273,37 @@ const TeamMemberModal = ({
       }`}
       onClick={onClose}
     >
-      {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
+      {/* Backdrop with blur */}
+      <div className="absolute inset-0 bg-white/80 backdrop-blur-md" />
       
-      {/* Modal Card */}
+      {/* Close Button - Fixed position top right */}
+      <button
+        onClick={onClose}
+        className="absolute top-6 right-6 md:top-8 md:right-8 z-20 w-12 h-12 flex items-center justify-center bg-black rounded-full transition-all duration-300 hover:scale-110"
+        aria-label="Close modal"
+      >
+        <X size={20} className="text-white" />
+      </button>
+
+      {/* Modal Content */}
       <div
-        className={`relative bg-white max-w-lg w-[90%] mx-4 overflow-hidden transition-all duration-500 rounded-lg ${
-          isOpen ? "scale-100 translate-y-0" : "scale-95 translate-y-8"
+        className={`relative z-10 w-full max-w-2xl mx-4 md:mx-auto px-6 md:px-0 transition-all duration-500 ${
+          isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center bg-white/90 hover:bg-white rounded-full transition-all duration-300 group shadow-lg"
-          aria-label="Close modal"
-        >
-          <X size={20} className="text-gray-800 group-hover:rotate-90 transition-transform duration-300" />
-        </button>
+        {/* Title Section */}
+        <div className="mb-6">
+          <p className="text-sm tracking-widest uppercase text-gray-500 mb-2">
+            {member.title}
+          </p>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-gray-900 tracking-tight">
+            {member.name}
+          </h2>
+        </div>
 
         {/* Image */}
-        <div className="w-full aspect-[4/3] overflow-hidden bg-gray-100 flex items-center justify-center">
+        <div className="w-full aspect-[16/10] overflow-hidden rounded-lg bg-gray-100 flex items-center justify-center mb-8">
           {member.image ? (
             <img
               src={member.image}
@@ -300,24 +316,14 @@ const TeamMemberModal = ({
             />
           ) : null}
           <div className={`flex items-center justify-center ${member.image ? "hidden" : ""}`}>
-            <User size={96} className="text-[#c6912c]/30" />
+            <User size={120} className="text-[#c6912c]/30" />
           </div>
         </div>
 
-        {/* Content */}
-        <div className="p-8 md:p-10">
-          <div className="border-l-2 border-[#c6912c] pl-6">
-            <h3 className="text-2xl md:text-3xl font-medium tracking-wide text-gray-900 mb-1">
-              {member.name}
-            </h3>
-            <p className="text-sm tracking-widest uppercase text-[#c6912c] mb-6">
-              {member.title}
-            </p>
-            <p className="text-gray-600 leading-relaxed">
-              {member.bio}
-            </p>
-          </div>
-        </div>
+        {/* Bio Text */}
+        <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-xl">
+          {member.bio}
+        </p>
       </div>
     </div>
   )
