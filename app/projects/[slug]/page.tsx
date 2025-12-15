@@ -36,6 +36,7 @@ const ChevronRight = () => (
     <path d="m9 18 6-6-6-6" />
   </svg>
 )
+
 export default function ProjectPage() {
   const params = useParams()
   const slug = params.slug as string
@@ -151,7 +152,7 @@ export default function ProjectPage() {
             </div>
 
             {galleryImages.length > 0 && (
-              <div className="relative w-full h-[600px] bg-black group">
+              <div className="relative w-full h-[400px] sm:h-[600px] bg-black group">
                 <img
                   src={galleryImages[currentImage] || "/placeholder.svg"}
                   alt={`${project.title} - Gallery image ${currentImage + 1}`}
@@ -160,7 +161,7 @@ export default function ProjectPage() {
 
                 <button
                   onClick={prevImage}
-                  className="absolute left-8 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all opacity-0 group-hover:opacity-100"
+                  className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all sm:opacity-0 sm:group-hover:opacity-100"
                   aria-label="Previous image"
                 >
                   <ChevronLeft />
@@ -168,13 +169,13 @@ export default function ProjectPage() {
 
                 <button
                   onClick={nextImage}
-                  className="absolute right-8 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all opacity-0 group-hover:opacity-100"
+                  className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all sm:opacity-0 sm:group-hover:opacity-100"
                   aria-label="Next image"
                 >
                   <ChevronRight />
                 </button>
 
-                <div className="absolute bottom-8 right-8 text-white text-sm bg-black/50 px-4 py-2 rounded">
+                <div className="absolute bottom-4 sm:bottom-8 right-4 sm:right-8 text-white text-sm bg-black/50 px-4 py-2 rounded">
                   {currentImage + 1} / {galleryImages.length}
                 </div>
               </div>
