@@ -1,15 +1,12 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { AnimatedCounter } from "@/components/animated-counter"
-
 import { X } from "lucide-react"
-
-const SCROLL_MULTIPLIER = 0.85
 
 const services = [
   {
@@ -158,38 +155,13 @@ function ServiceModal({
   )
 }
 
-function debounce<T extends (...args: unknown[]) => void>(fn: T, ms: number) {
-  let timer: ReturnType<typeof setTimeout>
-  return (...args: Parameters<T>) => {
-    clearTimeout(timer)
-    timer = setTimeout(() => fn(...args), ms)
-  }
-}
-
 export default function EngineeringConsultingPage() {
-  const [scrollProgress, setScrollProgress] = useState(0)
   const [selectedService, setSelectedService] = useState<Service | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const carouselRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
-
-  const updateScrollProgress = useRef(
-    debounce(() => {
-      const el = carouselRef.current
-      if (!el) return
-      const max = el.scrollWidth - el.clientWidth
-      setScrollProgress(max > 0 ? (el.scrollLeft / max) * 100 : 0)
-    }, 16)
-  ).current
-
-  function scrollCarousel(dir: number) {
-    const el = carouselRef.current
-    if (!el) return
-    el.scrollBy({ left: dir * el.clientWidth * SCROLL_MULTIPLIER, behavior: "smooth" })
-  }
 
   function openServiceModal(service: Service) {
     setSelectedService(service)
@@ -278,25 +250,29 @@ export default function EngineeringConsultingPage() {
       </section>
 
       <section className="w-full bg-[#0a0a0a] py-20 md:py-28" aria-label="Consulting Services">
-        <div className="container mx-auto px-6 md:px-8 max-w-7xl">
+        <div className="container mx-auto px-6 md:px-8 max-w-[1600px]">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white uppercase tracking-tight text-center mb-16">
             Consulting Services
           </h2>
 
-          <div
-            ref={carouselRef}
-            onScroll={updateScrollProgress}
-            role="region"
-            aria-label="Services carousel"
-            className="flex flex-col md:flex-row gap-8 md:overflow-x-auto md:snap-x md:snap-mandatory pb-4 md:-mx-6 md:px-6"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-          >
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
             {services.map(svc => (
               <article
                 key={svc.id}
                 onClick={() => openServiceModal(svc)}
-                className="flex-shrink-0 w-full md:w-[50vw] lg:w-[480px] md:snap-center bg-[#1a1a1a] border border-white/10 rounded-2xl p-10 md:p-12 relative cursor-pointer group hover:border-[#c6912c]/50 transition-all duration-300"
+                className="relative bg-[#111] border-2 border-white/20 rounded-3xl p-8 md:p-10 cursor-pointer group hover:border-[#c6912c]/60 transition-all duration-300 min-h-[400px] flex flex-col"
               >
+                {/* Vertical "Services" text */}
+                <div className="absolute left-4 top-8 hidden md:block">
+                  <span 
+                    className="text-white/20 text-xs font-medium tracking-[0.3em] uppercase"
+                    style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+                  >
+                    Services
+                  </span>
+                </div>
+
+                {/* Expand button */}
                 <button
                   className="absolute top-6 right-6 z-10 w-10 h-10 flex items-center justify-center bg-white/10 rounded-full transition-all duration-300 group-hover:bg-[#c6912c] group-hover:scale-110"
                   aria-label={`Learn more about ${svc.title}`}
@@ -322,53 +298,158 @@ export default function EngineeringConsultingPage() {
                   </svg>
                 </button>
 
-                <span className="block text-[8rem] md:text-[10rem] lg:text-[12rem] font-bold text-[#c6912c] leading-none mb-6">
+                {/* Large number */}
+                <span className="block text-[6rem] md:text-[7rem] lg:text-[8rem] font-bold text-[#c6912c] leading-none mb-6 ml-4 md:ml-8">
                   {svc.number}
                 </span>
-                <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 uppercase tracking-tight">
-                  {svc.title}
-                </h3>
-                <p className="text-white/70 text-base md:text-lg leading-relaxed">
-                  {svc.description}
-                </p>
+
+                {/* Content */}
+                <div className="mt-auto ml-4 md:ml-8 space-y-4">
+                  <h3 className="text-xl md:text-2xl font-bold text-white uppercase tracking-tight leading-tight">
+                    {svc.title}
+                  </h3>
+                  <p className="text-white/60 text-sm md:text-base leading-relaxed">
+                    {svc.description}
+                  </p>
+                  
+                  {/* Feature preview */}
+                  <div className="pt-4 space-y-2">
+                    {svc.features.slice(0, 2).map((feature, i) => (
+                      <div key={i} className="flex items-center gap-2 text-white/40 text-sm">
+                        <div className="w-1 h-1 bg-[#c6912c] rounded-full" />
+                        <span>{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </article>
             ))}
           </div>
+        </div>
+      </section>
 
-          <nav className="hidden md:flex items-center justify-center gap-6 mt-8" aria-label="Carousel navigation">
-            <button
-              onClick={() => scrollCarousel(-1)}
-              className="w-12 h-12 flex items-center justify-center text-white border border-white/30 rounded-full hover:bg-white/10 hover:text-[#c6912c] transition-all"
-              aria-label="Previous slide"
-            >
-              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
+      <section className="w-full bg-[#f8f8f8] py-20 md:py-28">
+        <div className="container mx-auto px-6 md:px-8 max-w-[1400px]">
+          {/* Header */}
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 mb-16">
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-8 h-[2px] bg-[#c6912c]" />
+                <span className="text-[#c6912c] text-sm font-medium tracking-[0.2em] uppercase">
+                  Our Results Speak For Us
+                </span>
+              </div>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold uppercase leading-[1.1] tracking-tight">
+                <span className="text-[#1a1a1a]">Driving Results</span><br />
+                <span className="text-[#1a1a1a]">Through </span>
+                <span className="text-[#c6912c]">Expert</span><br />
+                <span className="text-[#c6912c]">Consulting</span>
+              </h2>
+            </div>
+          </div>
 
-            <div 
-              className="w-48 md:w-64 h-1.5 bg-gray-800 rounded-full overflow-hidden" 
-              role="progressbar" 
-              aria-valuenow={Math.round(scrollProgress)} 
-              aria-valuemin={0} 
-              aria-valuemax={100}
-            >
-              <div
-                className="h-full bg-[#c6912c] rounded-full transition-all duration-300"
-                style={{ width: `${scrollProgress}%` }}
-              />
+          {/* Results Grid */}
+          <div className="grid md:grid-cols-2 gap-px bg-[#e0e0e0]">
+            {/* Result 1 */}
+            <div className="bg-[#f8f8f8] p-8 md:p-12 flex items-center justify-between gap-6">
+              <div className="space-y-4">
+                <h3 className="text-2xl md:text-3xl font-bold text-[#1a1a1a] uppercase leading-tight">
+                  $500K+ Client<br />Savings Delivered
+                </h3>
+                <Link 
+                  href="/projects"
+                  className="inline-flex items-center justify-center w-12 h-12 bg-[#c6912c]/10 text-[#c6912c] rounded-lg hover:bg-[#c6912c] hover:text-white transition-all"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+              </div>
+              <div className="hidden sm:block w-40 h-40 md:w-48 md:h-48 relative flex-shrink-0">
+                <Image 
+                  src="/images/isometric-house-1.png" 
+                  alt="Construction savings illustration"
+                  fill
+                  className="object-contain"
+                />
+              </div>
             </div>
 
-            <button
-              onClick={() => scrollCarousel(1)}
-              className="w-12 h-12 flex items-center justify-center text-white border border-white/30 rounded-full hover:bg-white/10 hover:text-[#c6912c] transition-all"
-              aria-label="Next slide"
-            >
-              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </nav>
+            {/* Result 2 */}
+            <div className="bg-[#f8f8f8] p-8 md:p-12 flex items-center justify-between gap-6">
+              <div className="space-y-4">
+                <h3 className="text-2xl md:text-3xl font-bold text-[#1a1a1a] uppercase leading-tight">
+                  100% Permitting<br />Success Rate
+                </h3>
+                <Link 
+                  href="/projects"
+                  className="inline-flex items-center justify-center w-12 h-12 bg-[#c6912c]/10 text-[#c6912c] rounded-lg hover:bg-[#c6912c] hover:text-white transition-all"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+              </div>
+              <div className="hidden sm:block w-40 h-40 md:w-48 md:h-48 relative flex-shrink-0">
+                <Image 
+                  src="/images/isometric-house-2.png" 
+                  alt="Permitting success illustration"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+            </div>
+
+            {/* Result 3 */}
+            <div className="bg-[#f8f8f8] p-8 md:p-12 flex items-center justify-between gap-6">
+              <div className="space-y-4">
+                <h3 className="text-2xl md:text-3xl font-bold text-[#1a1a1a] uppercase leading-tight">
+                  10+ Disputes<br />Resolved
+                </h3>
+                <Link 
+                  href="/projects"
+                  className="inline-flex items-center justify-center w-12 h-12 bg-[#c6912c]/10 text-[#c6912c] rounded-lg hover:bg-[#c6912c] hover:text-white transition-all"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+              </div>
+              <div className="hidden sm:block w-40 h-40 md:w-48 md:h-48 relative flex-shrink-0">
+                <Image 
+                  src="/images/isometric-house-3.png" 
+                  alt="Dispute resolution illustration"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+            </div>
+
+            {/* Result 4 */}
+            <div className="bg-[#f8f8f8] p-8 md:p-12 flex items-center justify-between gap-6">
+              <div className="space-y-4">
+                <h3 className="text-2xl md:text-3xl font-bold text-[#1a1a1a] uppercase leading-tight">
+                  Projects Delivered<br />On Time & Budget
+                </h3>
+                <Link 
+                  href="/projects"
+                  className="inline-flex items-center justify-center w-12 h-12 bg-[#c6912c]/10 text-[#c6912c] rounded-lg hover:bg-[#c6912c] hover:text-white transition-all"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+              </div>
+              <div className="hidden sm:block w-40 h-40 md:w-48 md:h-48 relative flex-shrink-0">
+                <Image 
+                  src="/images/isometric-house-4.png" 
+                  alt="On-time delivery illustration"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -384,13 +465,13 @@ export default function EngineeringConsultingPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/contact"
-              className="w-full sm:w-auto px-8 py-4 bg-[#c6912c] text-black font-bold text-sm uppercase tracking-wider rounded-md hover:bg-[#b87d35] transition-colors"
+              className="w-full sm:w-auto sm:min-w-[280px] px-8 py-4 bg-[#c6912c] text-black font-bold text-sm uppercase tracking-wider rounded-md hover:bg-[#b87d35] transition-colors text-center"
             >
               Schedule a Consultation
             </Link>
             <a
               href="tel:+12086258342"
-              className="w-full sm:w-auto px-8 py-4 border-2 border-white/30 text-white font-bold text-sm uppercase tracking-wider rounded-md hover:border-[#c6912c] hover:text-[#c6912c] transition-colors"
+              className="w-full sm:w-auto sm:min-w-[280px] px-8 py-4 border-2 border-white text-white font-bold text-sm uppercase tracking-wider rounded-md hover:bg-white hover:text-black transition-colors text-center"
             >
               Call (208) 625-8342
             </a>
