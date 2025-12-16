@@ -447,6 +447,7 @@ export default function AntovaBuilders() {
       </section>
 
       <section
+        id="testimonials"
         ref={testimonialsRef}
         className={`py-24 lg:py-32 ${bottomBgColor} transition-colors duration-300 ease-in-out relative overflow-hidden`}
       >
